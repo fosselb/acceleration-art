@@ -1,8 +1,7 @@
-// receive_Numbers.ino
+// receive_Numbers.pde
 // Author: Fosse Lin-Bianco
 // Purpose: To display acceleration data in the visual form of circles and color
-// Notes: This program runs in conjunction with myMPU-6050 created ELEGOO and tweaked by Michael Schoeffler
-
+// Notes: This program runs in conjunction with myMPU-6050 created by ELEGOO and tweaked by Michael Schoeffler
 
 import processing.serial.*;
 
