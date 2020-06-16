@@ -9,7 +9,7 @@ This project aims to construct a motion tracking system that will track the acce
 ## Sample Digital Art Pieces
 
 * Test 0
-<img src="./digital-art-pieces/test-0/1.1.png" alt="1.1" width="500" height="500" />
+<img src="./digital-art-pieces/test-0/0.1.png" alt="1.1" width="500" height="500" />
 
 ## Experiments
 Below is a list of the tests with explanations.
