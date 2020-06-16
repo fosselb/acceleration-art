@@ -4,7 +4,7 @@ void setup() {
 
 void loop() {
   //Serial.println("Hello World!");   // print
-  long randomNumber = random(10);
+  long randomNumber = random(10500);
   Serial.println(randomNumber);
   delay(200);                       // wait 100 ms
 }
