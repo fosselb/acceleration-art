@@ -9,20 +9,34 @@ Serial myPort;   // Create object from Serial class
 String val;      // Data received from the serial port
 Boolean pauseScreen = false;
 
+public static int borderHeight = 10;
+public static int buttonDiameter = 35;
+public static int buttonSpacing = 150;
+
+public static int canvasWidth = 800;
+public static int canvasHeight = 800;
+public static int userInterfaceHeight = buttonDiameter + borderHeight*2;
+
+Boolean editingMode = false;
+
 //printArray(Serial.list());  // find what serial port to use
 
 void setup() {
-  String portName = Serial.list()[3];        // change to match port
-  myPort = new Serial(this, portName, 9600);
+  if (!editingMode) {
+    String portName = Serial.list()[3];        // change to match port
+    myPort = new Serial(this, portName, 9600);
+  }
   
-  size(1000, 1000);
+  size(820, 910);
+  //fullScreen();
   background(0);
+  drawUserInterface();
 }
 
 void draw() {
-  if (myPort.available() > 0) {
+  if (myPort.available() > 0 && !editingMode) {
     val = myPort.readStringUntil('\n');
-  }
+  
   
   val = trim(val);
   if (val == null || val == "") {
@@ -42,6 +56,8 @@ void draw() {
   }
   
   delay(100);
+  }
+  
 }
 
 public void keyPressed() {
@@ -53,4 +69,38 @@ public void keyPressed() {
         loop();
       }
     }
-  }
+}
+  
+public void drawUserInterface() {
+
+  //rect(0, 100, width - 1, 20);
+  
+  // title
+  textSize(32);
+  text("Digital Movement Art", borderHeight, borderHeight*4);
+  
+  // canvas screen
+  stroke(255);
+  noFill();
+  rect(borderHeight, userInterfaceHeight, canvasWidth, canvasHeight);
+  
+  // control buttons
+  fill(255);
+  ellipse(buttonDiameter/2 + borderHeight, height - borderHeight - buttonDiameter/2, buttonDiameter, buttonDiameter);
+  ellipse(buttonDiameter/2 + borderHeight + buttonSpacing, height - borderHeight - buttonDiameter/2, buttonDiameter, buttonDiameter);
+  ellipse(buttonDiameter/2 + borderHeight + buttonSpacing*2, height - borderHeight - buttonDiameter/2, buttonDiameter, buttonDiameter);
+
+  // control button labels
+  textSize(20);
+  text("Start", borderHeight*2 + buttonDiameter, userInterfaceHeight + canvasHeight + borderHeight + 25);
+  textSize(20);
+  text("Stop", borderHeight*2 + buttonDiameter + buttonSpacing, userInterfaceHeight + canvasHeight + borderHeight + 25);
+  textSize(20);
+  text("Save", borderHeight*2 + buttonDiameter + buttonSpacing*2, userInterfaceHeight + canvasHeight + borderHeight + 25);
+
+  // recording button
+  noStroke();
+  fill(255, 0, 0, 150);
+  ellipse(width - buttonDiameter/4 - borderHeight, borderHeight*2, buttonDiameter/2, buttonDiameter/2);
+
+}
