@@ -22,6 +22,13 @@ public int canvasWidth = 800;
 public int canvasHeight = 800;
 public int userInterfaceHeight = buttonDiameter + borderHeight*2;
 
+public String currentDateAndTime = get_date_and_time();
+public String currentDate = get_date();
+public String screenshotsFileLocation = "/Users/fosselin-bianco/Documents/LMU/Senior Project/digital-movement-art/digital-art-pieces/screenshots/";
+public String animationFileLocation = "/Users/fosselin-bianco/Documents/LMU/Senior Project/digital-movement-art/digital-art-pieces/animation/";
+
+public int shotCounter = 0;
+
 //printArray(Serial.list());  // find what serial port to use
 
 void setup() {
@@ -37,6 +44,8 @@ void draw() {
     sketchScreen();
   }
 }
+
+// Methods
 
 public void sketchScreen() {
   if (myPort.available() > 0) {
@@ -61,7 +70,15 @@ public void sketchScreen() {
   }
   
   if (recording) {
-    saveFrame("output/sketch-####.png");
+    //saveFrame("output/sketch-####.png");
+    //saveFrame("/Users/fosselin-bianco/Documents/LMU/Senior Project/digital-movement-art/digital-art-pieces/animation/####.png");
+    
+    //String animationFileLocation_and_Name = animationFileLocation + currentDate + '/' + "shot-" + shotCounter + '/' + "####.png";
+    
+    String animationFileLocation_and_Name = animationFileLocation + currentDate + '/' + "shot-" + currentDateAndTime + '/' + "####.png";
+  
+    saveFrame(animationFileLocation_and_Name);
+    addRecordingButton(width - 40, 7);
   }
   
   delay(100);
@@ -81,13 +98,27 @@ public void keyPressed() {
   // save image
   if ((key == 's' || key == 'S') && gameState == 1) {
     String fileName = get_date_and_time();
-    save(fileName);
-    save("/Users/fosselin-bianco/Documents/LMU/Senior Project/digital-movement-art/Processing/test-save.png");
+    String screenshotFileLocation_and_Name = screenshotsFileLocation + currentDate + '/' + fileName + ".png";
+  
+    save(screenshotFileLocation_and_Name);
+    //save("/Users/fosselin-bianco/Documents/LMU/Senior Project/digital-movement-art/digital-art-pieces/test-save.png");
   }
   
   // record movie
   if ((key == 'r' || key == 'R') && gameState == 1) {
     recording = !recording;
+    
+    //if (lastCurrentDate == currentDate && recording) {
+    //  shotCounter++;
+    //} else if (lastCurrentDate != currentDate && recording) {
+    //  shotCounter = 1;
+    //  lastCurrentDate = currentDate;
+    //}
+  }
+  
+  // exit
+  if (key == '`') {
+    exit();
   }
 }
 
@@ -113,11 +144,13 @@ public void initScreen() {
   textSize(30);
   text("created by Fosse Lin-Bianco", width/2, height/2 + textSpacing - textSpacing*4);
   textSize(30);
-  text("Press SPACE BAR to pause", width/2, height/2 + textSpacing*3 - textSpacing*4);
+  text("Press SPACE BAR to pause/play", width/2, height/2 + textSpacing*3 - textSpacing*4);
   textSize(30);
   text("Press S key to save sketch", width/2, height/2 + textSpacing*4 - textSpacing*4);
   textSize(30);
-  text("CLICK anywhere to begin", width/2, height/2 + textSpacing*6 - textSpacing*4);
+  text("Press R key to record sketch", width/2, height/2 + textSpacing*5 - textSpacing*4);
+  textSize(30);
+  text("CLICK anywhere to begin", width/2, height/2 + textSpacing*7 - textSpacing*4);
   
 }
 
@@ -127,21 +160,40 @@ public void eraseWelcomeIntructions() {
 }
 
 public String get_date_and_time() {
-  //int d = day();
-  //int m = month();
-  //int y = year();
-
   String[] date_and_time = new String[6];
-  
-  date_and_time[0] = String.valueOf(minute());
-  date_and_time[1] = String.valueOf(hour());
-  date_and_time[2] = String.valueOf(day());
-  date_and_time[3] = String.valueOf(month());
-  date_and_time[4] = String.valueOf(year());
-  date_and_time[5] = "jpg";
+
+  date_and_time[0] = String.valueOf(year());
+  date_and_time[1] = String.valueOf(month());
+  date_and_time[2] = String.valueOf(day()); 
+  date_and_time[3] = String.valueOf(hour());
+  date_and_time[4] = String.valueOf(minute());
+  date_and_time[5] = String.valueOf(second());
   
   String s = join(date_and_time, ".");
   println(s);
   
   return s;
+}
+
+public String get_date() {
+  String[] date = new String[3];
+
+  date[0] = String.valueOf(month());
+  date[1] = String.valueOf(day());
+  date[2] = String.valueOf(year());
+  
+  String s = join(date, "-");
+  println(s);
+   
+  return s;
+}
+
+
+public void addRecordingButton(int x, int y) {
+  fill(255, 0, 0);
+  noStroke();
+  int rectWidth = 25;
+  int rectHeight = 15;
+  rect(x, y, rectWidth, rectHeight);
+  triangle(x + rectWidth - 5, y + rectHeight/2, x + rectWidth + 10, y - 3, x + rectWidth + 10, y + rectHeight + 3);
 }
