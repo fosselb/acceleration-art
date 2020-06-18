@@ -78,8 +78,9 @@ public void sketchScreen() {
     String animationFileLocation_and_Name = animationFileLocation + currentDate + '/' + "shot-" + currentDateAndTime + '/' + "####.png";
   
     saveFrame(animationFileLocation_and_Name);
-    addRecordingButton(width - 40, 7);
   }
+  
+  stroke(1);
   
   delay(100);
 }
@@ -170,7 +171,7 @@ public String get_date_and_time() {
   date_and_time[5] = String.valueOf(second());
   
   String s = join(date_and_time, ".");
-  println(s);
+  //println(s);
   
   return s;
 }
@@ -183,14 +184,14 @@ public String get_date() {
   date[2] = String.valueOf(year());
   
   String s = join(date, "-");
-  println(s);
+  //println(s);
    
   return s;
 }
 
 
 public void addRecordingButton(int x, int y) {
-  fill(255, 0, 0);
+  //fill(255, 0, 0);
   noStroke();
   int rectWidth = 25;
   int rectHeight = 15;
