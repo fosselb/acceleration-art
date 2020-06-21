@@ -7,7 +7,7 @@
 import processing.serial.*;
 
 Serial myPort;   // Create object from Serial class
-String val;      // Data received from the serial port
+public String val;      // Data received from the serial port
 Boolean firstContact = false;
 Boolean pauseScreen = false;
 
@@ -85,6 +85,8 @@ public void sketchScreen() {
   
   //delay(100);
   
+  //-----------------
+  
   if (myPort.available() > 0) {
     val = myPort.readStringUntil('\n');  // put incoming data into a string.
                                          // '\n' is our end delimiter indicating the end of a complete packet
@@ -111,7 +113,7 @@ public void sketchScreen() {
         
         myPort.write("A");
         
-        //if (val != null || val != "") {
+        if (val != null || val != "") {
           float rand_x = random(width);
           float rand_y = random(height);
           
@@ -119,50 +121,23 @@ public void sketchScreen() {
           
           fill(rand_x, 200, rand_y);
           ellipse(rand_x, rand_y, diameter, diameter);
-        //}
+        
         
         // save Frames
-        if (recording) {
-          String animationFileLocation_and_Name = animationFileLocation + currentDate + '/' + "shot-" + currentDateAndTime + '/' + "####.png";
-          saveFrame(animationFileLocation_and_Name);
+          if (recording) {
+            String animationFileLocation_and_Name = animationFileLocation + currentDate + '/' + "shot-" + currentDateAndTime + '/' + "####.png";
+            saveFrame(animationFileLocation_and_Name);
+            myPort.write('R');
+            println("R");
+          } else {
+            myPort.write('N');
+            println("N");
+          }
         }
       }
     }
   }
 }
-
-//void serialEvent(Serial myPort) {
-//  val = myPort.readStringUntil('\n');  // put incoming data into a string.
-//                                       // '\n' is our end delimiter indicating the end of a complete packet
-  
-//  if (val != null) {
-//    val = trim(val);    // trim whitesapce & formatting characters (like '\n')
-//    //if (val == "") {
-//    //  val = "0";
-//    //}
-//    println(val);
-    
-//    if (firstContact == false) {
-//      if (val.equals("A")) {
-//        myPort.clear();
-//        firstContact = true;
-//        myPort.write("A");
-//        println("contact");
-//      }
-//    } else {    
-//      if (mousePressed == true) {
-//        myPort.write('1');
-//        println("1");
-//      }
-      
-//      myPort.write("A");
-//      if (recording) {
-//        String animationFileLocation_and_Name = animationFileLocation + currentDate + '/' + "shot-" + currentDateAndTime + '/' + "####.png";
-//        saveFrame(animationFileLocation_and_Name);
-//      }
-//    }
-//  }
-//}
 
 public void keyPressed() {
   //pause
@@ -179,9 +154,9 @@ public void keyPressed() {
   if ((key == 's' || key == 'S') && gameState == 1) {
     String fileName = get_date_and_time();
     String screenshotFileLocation_and_Name = screenshotsFileLocation + currentDate + '/' + fileName + ".png";
-  
     save(screenshotFileLocation_and_Name);
-    //save("/Users/fosselin-bianco/Documents/LMU/Senior Project/digital-movement-art/digital-art-pieces/test-save.png");
+    myPort.write('S');
+    println("S");
   }
   
   // record movie

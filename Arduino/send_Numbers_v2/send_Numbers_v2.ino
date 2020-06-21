@@ -36,10 +36,16 @@ void loop() {
     if (val == '1') {
       ledState = !ledState;
       digitalWrite(LED_PIN, ledState);
+    } else if (val == 'R') {
+      digitalWrite(RED_LED, HIGH);
+    } else if (val == 'N') {
+      digitalWrite(RED_LED, LOW);
+    } else if (val == 'S') {
+      digitalWrite(BLUE_LED, HIGH);
+      delay(100);
+      digitalWrite(BLUE_LED, LOW);
     }
-//    delay(50);
   } else {
-//    Serial.println("Hello, world!");
     long randomNumber = random(10500);
     Serial.println(randomNumber);
     delay(dataRate_in_milliseconds);
