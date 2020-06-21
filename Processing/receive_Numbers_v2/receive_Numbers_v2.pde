@@ -8,6 +8,7 @@ import processing.serial.*;
 
 Serial myPort;   // Create object from Serial class
 String val;      // Data received from the serial port
+Boolean firstContact = false;
 Boolean pauseScreen = false;
 
 public int gameState = 0;
@@ -48,42 +49,120 @@ void draw() {
 // Methods
 
 public void sketchScreen() {
+  //if (myPort.available() > 0) {
+  //  val = myPort.readStringUntil('\n');
+  //}
+  
+  //val = trim(val);
+  //if (val == null || val == "") {
+  //  val = "0";
+  //}
+  //println(val);
+  
+  //if (val != null || val != "") {
+  //  float rand_x = random(width);
+  //  float rand_y = random(height);
+    
+  //  int diameter = abs(Integer.parseInt(val) / 100);
+    
+  //  fill(rand_x, 200, rand_y);
+  //  ellipse(rand_x, rand_y, diameter, diameter);
+  //  //ellipse(rand_x, rand_y, 100, 100);
+  //}
+  
+  //if (recording) {
+  //  //saveFrame("output/sketch-####.png");
+  //  //saveFrame("/Users/fosselin-bianco/Documents/LMU/Senior Project/digital-movement-art/digital-art-pieces/animation/####.png");
+    
+  //  //String animationFileLocation_and_Name = animationFileLocation + currentDate + '/' + "shot-" + shotCounter + '/' + "####.png";
+    
+  //  String animationFileLocation_and_Name = animationFileLocation + currentDate + '/' + "shot-" + currentDateAndTime + '/' + "####.png";
+  
+  //  saveFrame(animationFileLocation_and_Name);
+  //}
+  
+  //stroke(1);
+  
+  //delay(100);
+  
   if (myPort.available() > 0) {
-    val = myPort.readStringUntil('\n');
-  }
-  
-  val = trim(val);
-  if (val == null || val == "") {
-    val = "0";
-  }
-  println(val);
-  
-  if (val != null || val != "") {
-    float rand_x = random(width);
-    float rand_y = random(height);
+    val = myPort.readStringUntil('\n');  // put incoming data into a string.
+                                         // '\n' is our end delimiter indicating the end of a complete packet
     
-    int diameter = abs(Integer.parseInt(val) / 100);
-    
-    fill(rand_x, 200, rand_y);
-    ellipse(rand_x, rand_y, diameter, diameter);
-    //ellipse(rand_x, rand_y, 100, 100);
+    if (val != null) {
+      val = trim(val);    // trim whitesapce & formatting characters (like '\n')
+      //if (val == "") {
+      //  val = "0";
+      //}
+      println(val);
+      
+      if (firstContact == false) {
+        if (val.equals("A")) {
+          myPort.clear();
+          firstContact = true;
+          myPort.write("A");
+          println("contact");
+        }
+      } else {    
+        if (mousePressed == true) {
+          myPort.write('1');
+          println("1");
+        }
+        
+        myPort.write("A");
+        
+        //if (val != null || val != "") {
+          float rand_x = random(width);
+          float rand_y = random(height);
+          
+          int diameter = abs(Integer.parseInt(val) / 100);
+          
+          fill(rand_x, 200, rand_y);
+          ellipse(rand_x, rand_y, diameter, diameter);
+        //}
+        
+        // save Frames
+        if (recording) {
+          String animationFileLocation_and_Name = animationFileLocation + currentDate + '/' + "shot-" + currentDateAndTime + '/' + "####.png";
+          saveFrame(animationFileLocation_and_Name);
+        }
+      }
+    }
   }
-  
-  if (recording) {
-    //saveFrame("output/sketch-####.png");
-    //saveFrame("/Users/fosselin-bianco/Documents/LMU/Senior Project/digital-movement-art/digital-art-pieces/animation/####.png");
-    
-    //String animationFileLocation_and_Name = animationFileLocation + currentDate + '/' + "shot-" + shotCounter + '/' + "####.png";
-    
-    String animationFileLocation_and_Name = animationFileLocation + currentDate + '/' + "shot-" + currentDateAndTime + '/' + "####.png";
-  
-    saveFrame(animationFileLocation_and_Name);
-  }
-  
-  stroke(1);
-  
-  delay(100);
 }
+
+//void serialEvent(Serial myPort) {
+//  val = myPort.readStringUntil('\n');  // put incoming data into a string.
+//                                       // '\n' is our end delimiter indicating the end of a complete packet
+  
+//  if (val != null) {
+//    val = trim(val);    // trim whitesapce & formatting characters (like '\n')
+//    //if (val == "") {
+//    //  val = "0";
+//    //}
+//    println(val);
+    
+//    if (firstContact == false) {
+//      if (val.equals("A")) {
+//        myPort.clear();
+//        firstContact = true;
+//        myPort.write("A");
+//        println("contact");
+//      }
+//    } else {    
+//      if (mousePressed == true) {
+//        myPort.write('1');
+//        println("1");
+//      }
+      
+//      myPort.write("A");
+//      if (recording) {
+//        String animationFileLocation_and_Name = animationFileLocation + currentDate + '/' + "shot-" + currentDateAndTime + '/' + "####.png";
+//        saveFrame(animationFileLocation_and_Name);
+//      }
+//    }
+//  }
+//}
 
 public void keyPressed() {
   //pause
@@ -108,13 +187,6 @@ public void keyPressed() {
   // record movie
   if ((key == 'r' || key == 'R') && gameState == 1) {
     recording = !recording;
-    
-    //if (lastCurrentDate == currentDate && recording) {
-    //  shotCounter++;
-    //} else if (lastCurrentDate != currentDate && recording) {
-    //  shotCounter = 1;
-    //  lastCurrentDate = currentDate;
-    //}
   }
   
   // exit
@@ -133,6 +205,7 @@ public void mouseClicked() {
 public void serialSetup() {
   String portName = Serial.list()[3];        // change to match port
   myPort = new Serial(this, portName, 9600);
+  myPort.bufferUntil('\n');
 }
 
 public void initScreen() {

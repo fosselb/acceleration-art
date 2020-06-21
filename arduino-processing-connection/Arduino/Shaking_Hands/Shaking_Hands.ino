@@ -16,7 +16,7 @@ void loop() {
       ledState = !ledState;
       digitalWrite(LED_PIN, ledState);
     }
-    delay(100);
+    delay(50);
   } else {
     Serial.println("Hello, world!");
     delay(50);
