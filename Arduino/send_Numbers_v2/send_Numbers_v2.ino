@@ -17,7 +17,9 @@ int RED_LED = 2;
 boolean ledState = LOW;
 
 // CHANGE THIS
-int datapointPerSecond = 100;
+int datapointsPerSecond = 10;
+
+int dataRate_in_milliseconds = 1000 / datapointsPerSecond;
 
 void setup() {
   pinMode(LED_PIN, OUTPUT);
@@ -40,7 +42,7 @@ void loop() {
 //    Serial.println("Hello, world!");
     long randomNumber = random(10500);
     Serial.println(randomNumber);
-    delay(dataRate);
+    delay(dataRate_in_milliseconds);
   }
 
 }
