@@ -26,5 +26,5 @@ void loop() {
 
   Serial.println(Accel_X);
   
-  delay(100);
+  delay(50);
 }

@@ -5,6 +5,8 @@
 // Notes: This program runs in conjunction with myMPU-6050 created by ELEGOO and tweaked by Michael Schoeffler
 
 import processing.serial.*;
+import processing.sound.*;
+SinOsc sine;
 
 Serial myPort;   // Create object from Serial class
 public String val;      // Data received from the serial port
@@ -36,6 +38,10 @@ void setup() {
   serialSetup();
   size(800, 800);
   background(0);
+  
+  // Create the sine oscillator.
+  //sine = new SinOsc(this);
+  //sine.play();
 }
 
 void draw() {
@@ -78,6 +84,9 @@ public void sketchScreen() {
           
           println(val);
           int diameter = abs(Integer.parseInt(val));
+          
+          //play sound
+          //sine.freq(float(val));
           
           fill(rand_x, 200, rand_y);
           ellipse(rand_x, rand_y, diameter, diameter);
