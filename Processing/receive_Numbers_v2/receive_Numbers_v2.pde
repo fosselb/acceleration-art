@@ -49,63 +49,22 @@ void draw() {
 // Methods
 
 public void sketchScreen() {
-  //if (myPort.available() > 0) {
-  //  val = myPort.readStringUntil('\n');
-  //}
-  
-  //val = trim(val);
-  //if (val == null || val == "") {
-  //  val = "0";
-  //}
-  //println(val);
-  
-  //if (val != null || val != "") {
-  //  float rand_x = random(width);
-  //  float rand_y = random(height);
-    
-  //  int diameter = abs(Integer.parseInt(val) / 100);
-    
-  //  fill(rand_x, 200, rand_y);
-  //  ellipse(rand_x, rand_y, diameter, diameter);
-  //  //ellipse(rand_x, rand_y, 100, 100);
-  //}
-  
-  //if (recording) {
-  //  //saveFrame("output/sketch-####.png");
-  //  //saveFrame("/Users/fosselin-bianco/Documents/LMU/Senior Project/digital-movement-art/digital-art-pieces/animation/####.png");
-    
-  //  //String animationFileLocation_and_Name = animationFileLocation + currentDate + '/' + "shot-" + shotCounter + '/' + "####.png";
-    
-  //  String animationFileLocation_and_Name = animationFileLocation + currentDate + '/' + "shot-" + currentDateAndTime + '/' + "####.png";
-  
-  //  saveFrame(animationFileLocation_and_Name);
-  //}
-  
-  //stroke(1);
-  
-  //delay(100);
-  
-  //-----------------
-  
   if (myPort.available() > 0) {
     val = myPort.readStringUntil('\n');  // put incoming data into a string.
                                          // '\n' is our end delimiter indicating the end of a complete packet
     
     if (val != null) {
       val = trim(val);    // trim whitesapce & formatting characters (like '\n')
-      //if (val == "") {
-      //  val = "0";
-      //}
-      println(val);
+      //println(val);
       
-      if (firstContact == false) {
-        if (val.equals("A")) {
-          myPort.clear();
-          firstContact = true;
-          myPort.write("A");
-          println("contact");
-        }
-      } else {    
+      //if (firstContact == false) {
+      //  if (val.equals("A")) {
+      //    myPort.clear();
+      //    firstContact = true;
+      //    myPort.write("A");
+      //    println("contact");
+      //  }
+      //} else {    
         if (mousePressed == true) {
           myPort.write('1');
           println("1");
@@ -117,7 +76,8 @@ public void sketchScreen() {
           float rand_x = random(width);
           float rand_y = random(height);
           
-          int diameter = abs(Integer.parseInt(val) / 100);
+          println(val);
+          int diameter = abs(Integer.parseInt(val));
           
           fill(rand_x, 200, rand_y);
           ellipse(rand_x, rand_y, diameter, diameter);
@@ -134,7 +94,7 @@ public void sketchScreen() {
             println("N");
           }
         }
-      }
+      //}
     }
   }
 }
