@@ -3,10 +3,11 @@
 // Purpose: To display acceleration data in the visual form of circles and color. Version 2.
 //          Key presses and click for controls. No buttons.
 // Notes: This program runs in conjunction with myMPU-6050 created by ELEGOO and tweaked by Michael Schoeffler
+// WARNING: Not functional at the moment
 
 import processing.serial.*;
-import processing.sound.*;
-SinOsc sine;
+//import processing.sound.*;
+//SinOsc sine;
 
 Serial myPort;   // Create object from Serial class
 public String val;      // Data received from the serial port
@@ -31,6 +32,9 @@ public String screenshotsFileLocation = "/Users/fosselin-bianco/Documents/LMU/Se
 public String animationFileLocation = "/Users/fosselin-bianco/Documents/LMU/Senior Project/digital-movement-art/digital-art-pieces/animation/";
 
 public int shotCounter = 0;
+
+public int numberOfDataPointsOnScreen = 0;
+public final int dataPointLimit = 500;
 
 //printArray(Serial.list());  // find what serial port to use
 
@@ -90,6 +94,8 @@ public void sketchScreen() {
           
           fill(rand_x, 200, rand_y);
           ellipse(rand_x, rand_y, diameter, diameter);
+          numberOfDataPointsOnScreen++;
+          println(numberOfDataPointsOnScreen);
         
         
         // save Frames
@@ -105,6 +111,9 @@ public void sketchScreen() {
         }
       //}
     }
+  } else {
+    gameState = 0;
+    numberOfDataPointsOnScreen = 0;
   }
 }
 
@@ -131,6 +140,11 @@ public void keyPressed() {
   // record movie
   if ((key == 'r' || key == 'R') && gameState == 1) {
     recording = !recording;
+  }
+  
+  // restart
+  if (key == '1') {
+    gameState = 0;
   }
   
   // exit

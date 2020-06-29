@@ -25,6 +25,8 @@ void loop() {
 //  Serial.println();
 
   Serial.println(Accel_X);
+
+//  Serial.println(random(300));
   
   delay(50);
 }
