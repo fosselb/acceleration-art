@@ -6,7 +6,8 @@ boolean firstContact = false;
 
 void setup() {
   size(200, 200);
-  myPort = new Serial(this, Serial.list()[3], 9600);
+  //myPort = new Serial(this, Serial.list()[3], 9600);
+  myPort = new Serial(this, Serial.list()[4], 9600);
   myPort.bufferUntil('\n');
 }
 

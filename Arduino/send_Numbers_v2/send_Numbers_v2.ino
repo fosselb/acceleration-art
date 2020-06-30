@@ -1,14 +1,5 @@
-//void setup() {
-//  Serial.begin(9600);               // initialize serial communication
-//}
-//
-//void loop() {
-//  long randomNumber = random(10500);
-//  Serial.println(randomNumber);
-//  delay(200);                       // wait 100 ms
-//}
-
-// ***********************
+// send_Numbers_v2.ino
+// Author: Fosse Lin-Bianco
 
 char val;
 int LED_PIN = 13;
@@ -46,7 +37,7 @@ void loop() {
       digitalWrite(BLUE_LED, LOW);
     }
   } else {
-    long randomNumber = random(10500);
+    long randomNumber = random(300);
     Serial.println(randomNumber);
     delay(dataRate_in_milliseconds);
   }

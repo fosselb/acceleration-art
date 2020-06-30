@@ -9,6 +9,8 @@ void setup() {
 }
 
 void loop() {
+//  Serial.println(Serial.read());
+  
   if (Serial.available() > 0) {
     val = Serial.read();
 
