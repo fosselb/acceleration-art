@@ -1,9 +1,8 @@
 // receive_Numbers_v3.pde
 // Author: Fosse Lin-Bianco
-// Purpose: To display acceleration data in the visual form of circles and color. Version 2.
+// Purpose: To display acceleration data in the visual form of circles and color. Version 3.
 //          Key presses and click for controls. No buttons.
 // Notes: This program runs in conjunction with Accelerometer_Read.ino created by Fosse Lin-Bianco
-// WARNING: Not functional at the moment
 
 import processing.serial.*;
 //import processing.sound.*;
@@ -30,16 +29,20 @@ public String currentDateAndTime = get_date_and_time();
 public String currentDate = get_date();
 public String screenshotsFileLocation = "/Users/fosselin-bianco/Documents/LMU/Senior Project/digital-movement-art/digital-art-pieces/screenshots/";
 public String animationFileLocation = "/Users/fosselin-bianco/Documents/LMU/Senior Project/digital-movement-art/digital-art-pieces/animation/";
+public String dataFileLocation = "/Users/fosselin-bianco/Documents/LMU/Senior Project/digital-movement-art/digital-art-pieces/data/";
 
 public int shotCounter = 0;
 
 public int numberOfDataPointsOnScreen = 0;
 public final int dataPointLimit = 500;
 
+public Table dataTable = new Table();
+
 //printArray(Serial.list());  // find what serial port to use
 
 void setup() {
   serialSetup();
+  createTable(dataTable);
   size(800, 800);
   background(0);
   
@@ -89,13 +92,19 @@ public void sketchScreen() {
           println(val);
           int diameter = abs(Integer.parseInt(val));
           
-          //play sound
+          // * play sound *
           //sine.freq(float(val));
           
+          // * draw circle *
           fill(rand_x, 200, rand_y);
           ellipse(rand_x, rand_y, diameter, diameter);
-          numberOfDataPointsOnScreen++;
-          println(numberOfDataPointsOnScreen);
+          
+          // * save dataTable *
+          saveData(dataTable);
+          
+          // * number of data points on screen *
+          //numberOfDataPointsOnScreen++;
+          //println(numberOfDataPointsOnScreen);
         
         
         // save Frames
@@ -156,7 +165,9 @@ public void mouseClicked() {
 }
 
 public void serialSetup() {
-  String portName = Serial.list()[3];        // change to match port
+  String portName = Serial.list()[4];        // change to match port
+  //printArray(Serial.list());  // find what serial port to use
+  
   myPort = new Serial(this, portName, 9600);
   myPort.bufferUntil('\n');
 }
@@ -215,6 +226,17 @@ public String get_date() {
   return s;
 }
 
+public String get_time() {
+  String[] time = new String[3];
+
+  time[0] = String.valueOf(hour());
+  time[1] = String.valueOf(minute());
+  time[2] = String.valueOf(second());
+  
+  String s = join(time, ":");
+
+  return s;
+}
 
 public void addRecordingButton(int x, int y) {
   //fill(255, 0, 0);
@@ -223,4 +245,23 @@ public void addRecordingButton(int x, int y) {
   int rectHeight = 15;
   rect(x, y, rectWidth, rectHeight);
   triangle(x + rectWidth - 5, y + rectHeight/2, x + rectWidth + 10, y - 3, x + rectWidth + 10, y + rectHeight + 3);
+}
+
+public void saveData(Table t) {
+  TableRow newRow = t.addRow();
+  newRow.setString("date", currentDate);
+  newRow.setString("time", get_time());
+  newRow.setInt("accel_X", Integer.parseInt(val));
+  
+  String dataFileLocation_and_Name = dataFileLocation + currentDate + '/' + "shot-" + currentDateAndTime + ".csv";
+  
+  saveTable(t, dataFileLocation_and_Name);
+}
+
+public void createTable(Table t) {  
+  t.addColumn("date");
+  t.addColumn("time");
+  t.addColumn("accel_X");
+  t.addColumn("accel_Y");
+  t.addColumn("accel_Z");
 }
