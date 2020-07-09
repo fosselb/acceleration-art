@@ -1,3 +1,11 @@
+// Accelerometer_Read.ino
+// Author: Fosse Lin-Bianco
+// Purpose: To test receiving analog data from the
+//    ADXL335 LilyPad accelerometer sensor and display
+//    X, Y, and Z values on the Serial Monitor.
+// Hardware: 1) LilyPad Arduino USB + ADXL335 sensor
+//    (connected to port A2, A3, A4 or X, Y, and Z, respectively)
+
 #define Accel_X_PIN A2
 #define Accel_Y_PIN A3
 #define Accel_Z_PIN A4

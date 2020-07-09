@@ -25,9 +25,9 @@ void loop() {
   if (XBee.available()) {
     char current = XBee.read();
     if (current == 0x7E) {
-      Serial.println();
-      Serial.println();
-      Serial.println("Start:");
+//      Serial.println();
+//      Serial.println();
+//      Serial.println("Start:");
       dataCount = 0;
     }
 

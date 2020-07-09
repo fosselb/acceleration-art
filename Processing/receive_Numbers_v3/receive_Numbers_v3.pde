@@ -38,8 +38,6 @@ public final int dataPointLimit = 500;
 
 public Table dataTable = new Table();
 
-//printArray(Serial.list());  // find what serial port to use
-
 void setup() {
   serialSetup();
   createTable(dataTable);
@@ -165,7 +163,7 @@ public void mouseClicked() {
 }
 
 public void serialSetup() {
-  String portName = Serial.list()[4];        // change to match port
+  String portName = Serial.list()[6];        // change to match port
   //printArray(Serial.list());  // find what serial port to use
   
   myPort = new Serial(this, portName, 9600);
