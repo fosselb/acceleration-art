@@ -1,4 +1,4 @@
-// XBee_Remote_Analog.ino
+// XBee_Coordinator_Receive_Analog.ino
 // Author: Fosse Lin-Bianco
 // Purpose: To receive analog data from a remote XBee
 //    and print DECIMAL value to Serial Monitor. Data generated from
@@ -23,28 +23,29 @@ void setup() {
 
 void loop() {
   if (XBee.available()) {
-    char current = XBee.read();
+//    char current = XBee.read();
+    char current = Serial.read();
     if (current == 0x7E) {
 //      Serial.println();
-//      Serial.println();
-//      Serial.println("Start:");
+      Serial.println();
+      Serial.println("Start:");
       dataCount = 0;
     }
 
     dataCount++;
 
 // * To view all the bytes coming in *
-//    Serial.print(current, HEX);
-//    Serial.print(",");
+    Serial.print(current, HEX);
+    Serial.print(",");
     
 // * To view a nibble of analog data (0xXXXX) *
-    if (dataCount == 9) {
-      analog_MSB = current;
-    } else if (dataCount == 10) {
-      analog_LSB = current;
-      analog_reading = (analog_MSB * 256) + analog_LSB; // shift MSB, combine MSB and LSB
-      Serial.println(analog_reading);
-    }
+//    if (dataCount == 9) {
+//      analog_MSB = current;
+//    } else if (dataCount == 10) {
+//      analog_LSB = current;
+//      analog_reading = (analog_MSB * 256) + analog_LSB; // shift MSB, combine MSB and LSB
+//      Serial.println(analog_reading);
+//    }
 
   }
 }
