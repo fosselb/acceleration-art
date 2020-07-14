@@ -22,19 +22,24 @@ void setup() {
 }
 
 void loop() {
-  Accel_X = analogRead(Accel_X_PIN) - 510;
-  Accel_Y = analogRead(Accel_Y_PIN) - 490;
-  Accel_Z = analogRead(Accel_Z_PIN) - 615;
-//  Serial.print(Accel_X);
-//  Serial.print("\t");
-//  Serial.print(Accel_Y);
-//  Serial.print("\t");
-//  Serial.print(Accel_Z);
-//  Serial.println();
+// * adjusted data *
+//  Accel_X = analogRead(Accel_X_PIN) - 510;
+//  Accel_Y = analogRead(Accel_Y_PIN) - 490;
+//  Accel_Z = analogRead(Accel_Z_PIN) - 615;
 
-  Serial.println(Accel_X);
+// * Raw data *
+  Accel_X = analogRead(Accel_X_PIN);
+  Accel_Y = analogRead(Accel_Y_PIN);
+  Accel_Z = analogRead(Accel_Z_PIN);
+  
+  Serial.print(Accel_X);
+  Serial.print("\t");
+  Serial.print(Accel_Y);
+  Serial.print("\t");
+  Serial.print(Accel_Z);
+  Serial.println();
 
-//  Serial.println(random(300));
+//  Serial.println(Accel_X);
   
   delay(50);
 }
