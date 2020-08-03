@@ -29,17 +29,17 @@ void loop() {
 
 // * Raw data *
   Accel_X = analogRead(Accel_X_PIN);
-  Accel_Y = analogRead(Accel_Y_PIN);
-  Accel_Z = analogRead(Accel_Z_PIN);
+//  Accel_Y = analogRead(Accel_Y_PIN);
+//  Accel_Z = analogRead(Accel_Z_PIN);
   
   Serial.print(Accel_X);
-  Serial.print("\t");
-  Serial.print(Accel_Y);
-  Serial.print("\t");
-  Serial.print(Accel_Z);
+//  Serial.print("\t");
+//  Serial.print(Accel_Y);
+//  Serial.print("\t");
+//  Serial.print(Accel_Z);
   Serial.println();
 
 //  Serial.println(Accel_X);
   
-  delay(50);
+  delay(100);
 }
