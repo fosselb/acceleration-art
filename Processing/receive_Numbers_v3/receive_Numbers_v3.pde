@@ -163,10 +163,10 @@ public void mouseClicked() {
 }
 
 public void serialSetup() {
-  String portName = Serial.list()[4];        // change to match port
-  //printArray(Serial.list());  // find what serial port to use
+  //String portName = Serial.list()[4];        // change to match port
+  printArray(Serial.list());  // find what serial port to use
   
-  myPort = new Serial(this, portName, 9600);
+  //myPort = new Serial(this, portName, 9600);
   myPort.bufferUntil('\n');
 }
 
