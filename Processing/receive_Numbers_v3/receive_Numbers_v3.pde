@@ -267,6 +267,8 @@ public void saveData(Table t) {
   newRow.setString("date", currentDate);
   newRow.setString("time", get_time());
   newRow.setInt("accel_X", Integer.parseInt(accel_data[0]));
+  newRow.setInt("accel_Y", Integer.parseInt(accel_data[1]));
+  newRow.setInt("accel_Z", Integer.parseInt(accel_data[2]));
   
   String dataFileLocation_and_Name = dataFileLocation + currentDate + '/' + "shot-" + currentDateAndTime + ".csv";
   
