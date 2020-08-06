@@ -21,7 +21,7 @@ SoftwareSerial XBee(2, 3); // XBee DOUT, IN - Arduino pin 2, 3 (RX, TX)
 void setup() {
   XBee.begin(9600);
   Serial.begin(9600);
-//  establishContact();
+  establishContact();
 }
 
 void loop() {
@@ -47,6 +47,7 @@ void loop() {
       analog_LSB = current;
       analog_reading_X = (analog_MSB * 256) + analog_LSB; // shift MSB, combine MSB and LSB
       Serial.print(analog_reading_X);
+//      Serial.print("\n");
       Serial.print("\t");
     } else if (dataCount == 14) {
       analog_MSB = current;

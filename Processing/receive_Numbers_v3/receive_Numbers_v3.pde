@@ -10,6 +10,7 @@ import processing.serial.*;
 
 Serial myPort;   // Create object from Serial class
 public String val;      // Data received from the serial port
+public String[] accel_data = new String[3]; // x, y, z data from Arduino
 Boolean firstContact = false;
 Boolean pauseScreen = false;
 
@@ -84,18 +85,34 @@ public void sketchScreen() {
         myPort.write("A");
         
         if (val != null || val != "") {
+          
+           accel_data = split(val, "\t");
+           println("X: " + accel_data[0]);
+           println("Y: " + accel_data[1]);
+           println("Z: " + accel_data[2]);
+          
+          // * draw circle 1 *
+          //fill(rand_x, 200, rand_y);
           float rand_x = random(width);
           float rand_y = random(height);
-          
-          println(val);
-          int diameter = abs(Integer.parseInt(val)) / 10;
+          int diameter = abs(Integer.parseInt(accel_data[0])) / 10;
+          fill(67, 188, 205); //light blue
+          ellipse(rand_x, rand_y, diameter, diameter);
+          // * draw circle 2 *
+          rand_x = random(width);
+          rand_y = random(height);
+          diameter = abs(Integer.parseInt(accel_data[1])) / 10;
+          fill(234, 53, 70); //red orange
+          ellipse(rand_x, rand_y, diameter, diameter);
+          // * draw circle 3 *
+          rand_x = random(width);
+          rand_y = random(height);
+          diameter = abs(Integer.parseInt(accel_data[2])) / 10;
+          fill(102, 46, 155); //purple
+          ellipse(rand_x, rand_y, diameter, diameter);
           
           // * play sound *
           //sine.freq(float(val));
-          
-          // * draw circle *
-          fill(rand_x, 200, rand_y);
-          ellipse(rand_x, rand_y, diameter, diameter);
           
           // * save dataTable *
           saveData(dataTable);
@@ -163,10 +180,10 @@ public void mouseClicked() {
 }
 
 public void serialSetup() {
-  //String portName = Serial.list()[4];        // change to match port
-  printArray(Serial.list());  // find what serial port to use
+  String portName = Serial.list()[4];        // change to match port
+  //printArray(Serial.list());  // find what serial port to use
   
-  //myPort = new Serial(this, portName, 9600);
+  myPort = new Serial(this, portName, 9600);
   myPort.bufferUntil('\n');
 }
 
@@ -249,7 +266,7 @@ public void saveData(Table t) {
   TableRow newRow = t.addRow();
   newRow.setString("date", currentDate);
   newRow.setString("time", get_time());
-  newRow.setInt("accel_X", Integer.parseInt(val));
+  newRow.setInt("accel_X", Integer.parseInt(accel_data[0]));
   
   String dataFileLocation_and_Name = dataFileLocation + currentDate + '/' + "shot-" + currentDateAndTime + ".csv";
   
