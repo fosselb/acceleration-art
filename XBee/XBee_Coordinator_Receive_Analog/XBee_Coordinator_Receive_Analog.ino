@@ -21,7 +21,7 @@ SoftwareSerial XBee(2, 3); // XBee DOUT, IN - Arduino pin 2, 3 (RX, TX)
 void setup() {
   XBee.begin(9600);
   Serial.begin(9600);
-  //establishContact();
+  establishContact();
 }
 
 void loop() {
