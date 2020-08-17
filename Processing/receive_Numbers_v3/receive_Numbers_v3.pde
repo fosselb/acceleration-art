@@ -39,6 +39,10 @@ public final int dataPointLimit = 500;
 
 public Table dataTable = new Table();
 
+public int Z_accel_at_rest = 0;
+public int Y_accel_at_rest = 0;
+public int X_accel_at_rest = 0;
+
 void setup() {
   serialSetup();
   createTable(dataTable);
@@ -64,10 +68,8 @@ public void sketchScreen() {
   if (myPort.available() > 0) {
     val = myPort.readStringUntil('\n');  // put incoming data into a string.
                                          // '\n' is our end delimiter indicating the end of a complete packet
-    
     if (val != null) {
       val = trim(val);    // trim whitesapce & formatting characters (like '\n')
-      //println(val);
       
       if (firstContact == false) {
         if (val.equals("A")) {
@@ -95,19 +97,21 @@ public void sketchScreen() {
           //fill(rand_x, 200, rand_y);
           float rand_x = random(width);
           float rand_y = random(height);
-          int diameter = abs(Integer.parseInt(accel_data[0])) / 10;
+          int diameter = abs(Integer.parseInt(accel_data[0]));
           fill(67, 188, 205); //light blue
           ellipse(rand_x, rand_y, diameter, diameter);
+          
           // * draw circle 2 *
           rand_x = random(width);
           rand_y = random(height);
-          diameter = abs(Integer.parseInt(accel_data[1])) / 10;
+          diameter = abs(Integer.parseInt(accel_data[1]));
           fill(234, 53, 70); //red orange
           ellipse(rand_x, rand_y, diameter, diameter);
+          
           // * draw circle 3 *
           rand_x = random(width);
           rand_y = random(height);
-          diameter = abs(Integer.parseInt(accel_data[2])) / 10;
+          diameter = abs(Integer.parseInt(accel_data[2]));
           fill(102, 46, 155); //purple
           ellipse(rand_x, rand_y, diameter, diameter);
           
@@ -135,10 +139,7 @@ public void sketchScreen() {
         }
       }
     }
-  } //else {
-  //  gameState = 0;
-  //  numberOfDataPointsOnScreen = 0;
-  //}
+  }
 }
 
 public void keyPressed() {
@@ -281,4 +282,8 @@ public void createTable(Table t) {
   t.addColumn("accel_X");
   t.addColumn("accel_Y");
   t.addColumn("accel_Z");
+}
+
+public void calibrate() {
+
 }

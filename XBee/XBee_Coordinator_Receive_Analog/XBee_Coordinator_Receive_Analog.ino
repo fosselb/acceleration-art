@@ -12,16 +12,20 @@ char startByte = 0x7E;
 int dataCount = 0;
 byte analog_MSB;
 byte analog_LSB;
-int analog_reading_X;
-int analog_reading_Y;
 int analog_reading_Z;
+int analog_reading_Y;
+int analog_reading_X;
+int Z_accel_at_rest = 551; // calibrated values
+int Y_accel_at_rest = 552; // calibrated values
+int X_accel_at_rest = 435; // calibrated values
+
 
 SoftwareSerial XBee(2, 3); // XBee DOUT, IN - Arduino pin 2, 3 (RX, TX)
 
 void setup() {
   XBee.begin(9600);
   Serial.begin(9600);
-  //establishContact();
+  establishContact();
 }
 
 void loop() {
@@ -45,8 +49,9 @@ void loop() {
       analog_MSB = current;
     } else if (dataCount == 13) {
       analog_LSB = current;
-      analog_reading_X = (analog_MSB * 256) + analog_LSB; // shift MSB, combine MSB and LSB
-      Serial.print(analog_reading_X);
+      analog_reading_Z = (analog_MSB * 256) + analog_LSB; // shift MSB, combine MSB and LSB
+      analog_reading_Z -= Z_accel_at_rest;
+      Serial.print(analog_reading_Z);
 //      Serial.print("\n");
       Serial.print("\t");
     } else if (dataCount == 14) {
@@ -54,14 +59,16 @@ void loop() {
     } else if (dataCount == 15) {
       analog_LSB = current;
       analog_reading_Y = (analog_MSB * 256) + analog_LSB; // shift MSB, combine MSB and LSB
+      analog_reading_Y -= Y_accel_at_rest;
       Serial.print(analog_reading_Y);
       Serial.print("\t");
     } else if (dataCount == 16) {
       analog_MSB = current;
     } else if (dataCount == 17) {
       analog_LSB = current;
-      analog_reading_Z = (analog_MSB * 256) + analog_LSB; // shift MSB, combine MSB and LSB
-      Serial.print(analog_reading_Z);
+      analog_reading_X = (analog_MSB * 256) + analog_LSB; // shift MSB, combine MSB and LSB
+      analog_reading_X -= X_accel_at_rest;
+      Serial.print(analog_reading_X);
       Serial.print("\n");
     }
 
