@@ -11,6 +11,12 @@ import processing.serial.*;
 Serial myPort;   // Create object from Serial class
 public String val;      // Data received from the serial port
 public String[] accel_data = new String[3]; // x, y, z data from Arduino
+public String[] axis_label = {"Z", "Y", "X"};
+public int[][] colors = { {67, 188, 205}, // circle 1
+                          {234, 53, 70},  // circle 2
+                          {102, 46, 155}  // circle 3
+                        };
+
 Boolean firstContact = false;
 Boolean pauseScreen = false;
 
@@ -39,9 +45,7 @@ public final int dataPointLimit = 500;
 
 public Table dataTable = new Table();
 
-public int Z_accel_at_rest = 0;
-public int Y_accel_at_rest = 0;
-public int X_accel_at_rest = 0;
+
 
 void setup() {
   serialSetup();
@@ -87,33 +91,43 @@ public void sketchScreen() {
         myPort.write("A");
         
         if (val != null || val != "") {
-          
+           
            accel_data = split(val, "\t");
-           println("X: " + accel_data[0]);
-           println("Y: " + accel_data[1]);
-           println("Z: " + accel_data[2]);
+           
+           for (int i = 0; i < accel_data.length; i++) {
+             if (accel_data[i] != null) {
+               println(axis_label[i] + ": " + accel_data[i]);
+             }
           
-          // * draw circle 1 *
-          //fill(rand_x, 200, rand_y);
-          float rand_x = random(width);
-          float rand_y = random(height);
-          int diameter = abs(Integer.parseInt(accel_data[0]));
-          fill(67, 188, 205); //light blue
-          ellipse(rand_x, rand_y, diameter, diameter);
+              // * draw circle 1 *
+              float rand_x = random(width);
+              float rand_y = random(height);
+              int diameter = abs(Integer.parseInt(accel_data[i]));
+              fill(colors[i][0], colors[i][1], colors[i][2]); //light blue
+              ellipse(rand_x, rand_y, diameter, diameter);
           
-          // * draw circle 2 *
-          rand_x = random(width);
-          rand_y = random(height);
-          diameter = abs(Integer.parseInt(accel_data[1]));
-          fill(234, 53, 70); //red orange
-          ellipse(rand_x, rand_y, diameter, diameter);
-          
-          // * draw circle 3 *
-          rand_x = random(width);
-          rand_y = random(height);
-          diameter = abs(Integer.parseInt(accel_data[2]));
-          fill(102, 46, 155); //purple
-          ellipse(rand_x, rand_y, diameter, diameter);
+           }
+           
+              //// * draw circle 1 *
+              //float rand_x = random(width);
+              //float rand_y = random(height);
+              //int diameter = abs(Integer.parseInt(accel_data[0]));
+              //fill(67, 188, 205); //light blue
+              //ellipse(rand_x, rand_y, diameter, diameter);
+              
+              //// * draw circle 2 *
+              //rand_x = random(width);
+              //rand_y = random(height);
+              //diameter = abs(Integer.parseInt(accel_data[1]));
+              //fill(234, 53, 70); //red orange
+              //ellipse(rand_x, rand_y, diameter, diameter);
+              
+              //// * draw circle 3 *
+              //rand_x = random(width);
+              //rand_y = random(height);
+              //diameter = abs(Integer.parseInt(accel_data[2]));
+              //fill(102, 46, 155); //purple
+              //ellipse(rand_x, rand_y, diameter, diameter);
           
           // * play sound *
           //sine.freq(float(val));
@@ -267,9 +281,14 @@ public void saveData(Table t) {
   TableRow newRow = t.addRow();
   newRow.setString("date", currentDate);
   newRow.setString("time", get_time());
-  newRow.setInt("accel_X", Integer.parseInt(accel_data[0]));
-  newRow.setInt("accel_Y", Integer.parseInt(accel_data[1]));
-  newRow.setInt("accel_Z", Integer.parseInt(accel_data[2]));
+  
+  for (int i = 0; i < accel_data.length; i++) {
+    newRow.setInt("accel_" + axis_label[i], Integer.parseInt(accel_data[i]));
+  }
+  
+  //newRow.setInt("accel_X", Integer.parseInt(accel_data[0]));
+  //newRow.setInt("accel_Y", Integer.parseInt(accel_data[1]));
+  //newRow.setInt("accel_Z", Integer.parseInt(accel_data[2]));
   
   String dataFileLocation_and_Name = dataFileLocation + currentDate + '/' + "shot-" + currentDateAndTime + ".csv";
   
@@ -279,9 +298,9 @@ public void saveData(Table t) {
 public void createTable(Table t) {  
   t.addColumn("date");
   t.addColumn("time");
-  t.addColumn("accel_X");
-  t.addColumn("accel_Y");
   t.addColumn("accel_Z");
+  t.addColumn("accel_Y");
+  t.addColumn("accel_X");
 }
 
 public void calibrate() {

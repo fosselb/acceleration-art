@@ -37,8 +37,12 @@ void loop() {
       digitalWrite(BLUE_LED, LOW);
     }
   } else {
-    long randomNumber = random(300);
-    Serial.println(randomNumber);
+    long randomNumber = random(200);
+    long randomNumber2 = random(200);
+    Serial.print(randomNumber);
+    Serial.print("\t");
+    Serial.print(randomNumber2);
+    Serial.print("\n");
     delay(dataRate_in_milliseconds);
   }
 
