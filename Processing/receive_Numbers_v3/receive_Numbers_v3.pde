@@ -9,6 +9,9 @@ import processing.serial.*;
 //SinOsc sine;
 
 Serial myPort;   // Create object from Serial class
+
+PGraphics canvas;
+
 public String val;      // Data received from the serial port
 public String[] accel_data = new String[3]; // x, y, z data from Arduino
 public String[] axis_label = {"Z", "Y", "X"};
@@ -22,6 +25,7 @@ Boolean pauseScreen = false;
 
 public int gameState = 0;
 public Boolean recording = false;
+public int frame_number = 0;
 
 public int borderHeight = 10;
 public int buttonDiameter = 35;
@@ -45,13 +49,13 @@ public final int dataPointLimit = 500;
 
 public Table dataTable = new Table();
 
-
-
 void setup() {
   serialSetup();
   createTable(dataTable);
   size(800, 800);
-  background(0);
+  //background(0);
+  
+  canvas = createGraphics(width, height);
   
   // Create the sine oscillator.
   //sine = new SinOsc(this);
@@ -90,7 +94,7 @@ public void sketchScreen() {
         
         myPort.write("A");
         
-        if (val != null || val != "") {
+        if (val != null || val != "") {     
            
            accel_data = split(val, "\t");
            
@@ -99,12 +103,21 @@ public void sketchScreen() {
                println(axis_label[i] + ": " + accel_data[i]);
              }
           
-              // * draw circle 1 *
+              canvas.beginDraw();
+          
+              // * draw circles *
               float rand_x = random(width);
               float rand_y = random(height);
               int diameter = abs(Integer.parseInt(accel_data[i]));
-              fill(colors[i][0], colors[i][1], colors[i][2]); //light blue
-              ellipse(rand_x, rand_y, diameter, diameter);
+              //fill(colors[i][0], colors[i][1], colors[i][2]); //light blue
+              //ellipse(rand_x, rand_y, diameter, diameter);
+              
+              canvas.fill(colors[i][0], colors[i][1], colors[i][2]);
+              canvas.ellipse(rand_x, rand_y, diameter, diameter);
+              canvas.endDraw();
+              
+              background(0);
+              image(canvas, 0, 0);
           
            }
            
@@ -142,8 +155,13 @@ public void sketchScreen() {
         
         // save Frames
           if (recording) {
-            String animationFileLocation_and_Name = animationFileLocation + currentDate + '/' + "shot-" + currentDateAndTime + '/' + "####.png";
-            saveFrame(animationFileLocation_and_Name);
+            String frame_number_string = nf(frame_number, 4);
+            //String animationFileLocation_and_Name = animationFileLocation + currentDate + '/' + "shot-" + currentDateAndTime + '/' + "####.png";
+            //saveFrame(animationFileLocation_and_Name);
+            
+            String animationFileLocation_and_Name = animationFileLocation + currentDate + '/' + "shot-" + currentDateAndTime + '/' + frame_number_string + ".png";
+            canvas.save(animationFileLocation_and_Name);
+            
             myPort.write('R');
             println("R");
           } else {
@@ -171,7 +189,8 @@ public void keyPressed() {
   if ((key == 's' || key == 'S') && gameState == 1) {
     String fileName = get_date_and_time();
     String screenshotFileLocation_and_Name = screenshotsFileLocation + currentDate + '/' + fileName + ".png";
-    save(screenshotFileLocation_and_Name);
+    //save(screenshotFileLocation_and_Name);
+    canvas.save(screenshotFileLocation_and_Name);
     myPort.write('S');
     println("S");
   }

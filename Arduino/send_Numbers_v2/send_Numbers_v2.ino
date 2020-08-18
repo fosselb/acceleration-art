@@ -39,9 +39,12 @@ void loop() {
   } else {
     long randomNumber = random(200);
     long randomNumber2 = random(200);
+    long randomNumber3 = random(200);
     Serial.print(randomNumber);
     Serial.print("\t");
     Serial.print(randomNumber2);
+    Serial.print("\t");
+    Serial.print(randomNumber3);
     Serial.print("\n");
     delay(dataRate_in_milliseconds);
   }
