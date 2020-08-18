@@ -52,10 +52,10 @@ public Table dataTable = new Table();
 void setup() {
   serialSetup();
   createTable(dataTable);
-  size(800, 800);
+  //size(800, 800);
   //background(0);
   
-  canvas = createGraphics(width, height);
+  //canvas = createGraphics(width, height);
   
   // Create the sine oscillator.
   //sine = new SinOsc(this);
