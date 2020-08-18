@@ -24,7 +24,7 @@ Boolean firstContact = false;
 Boolean pauseScreen = false;
 
 public int gameState = 0;
-public Boolean recording = false;
+public Boolean recording = true;
 public int frame_number = 0;
 
 public int borderHeight = 10;
@@ -52,8 +52,14 @@ public Table dataTable = new Table();
 void setup() {
   serialSetup();
   createTable(dataTable);
-  size(800, 800);
-  //background(0);
+  background(0);
+  
+  // * 1:1 canvas *
+  //size(800, 800);
+  
+  // * 16:9 canvas *
+  size(960, 540);
+
   
   canvas = createGraphics(width * 2, height * 2);
   
@@ -157,7 +163,7 @@ public void sketchScreen() {
             //String animationFileLocation_and_Name = animationFileLocation + currentDate + '/' + "shot-" + currentDateAndTime + '/' + "####.png";
             //saveFrame(animationFileLocation_and_Name);
             
-            String animationFileLocation_and_Name = animationFileLocation + currentDate + '/' + "shot-" + currentDateAndTime + '/' + frame_number_string + ".png";
+            String animationFileLocation_and_Name = animationFileLocation + currentDate + '/' + "shot-" + currentDateAndTime + '/' + "shot-" + currentDateAndTime + "-" + frame_number_string + ".png";
             canvas.save(animationFileLocation_and_Name);
             frame_number++;
             
