@@ -154,20 +154,21 @@ public void sketchScreen() {
         
         
         // save Frames
-          if (recording) {
+          //if (recording) {
             String frame_number_string = nf(frame_number, 4);
             //String animationFileLocation_and_Name = animationFileLocation + currentDate + '/' + "shot-" + currentDateAndTime + '/' + "####.png";
             //saveFrame(animationFileLocation_and_Name);
             
             String animationFileLocation_and_Name = animationFileLocation + currentDate + '/' + "shot-" + currentDateAndTime + '/' + frame_number_string + ".png";
             canvas.save(animationFileLocation_and_Name);
+            frame_number++;
             
             myPort.write('R');
             println("R");
-          } else {
-            myPort.write('N');
-            println("N");
-          }
+          //} else {
+          //  myPort.write('N');
+          //  println("N");
+          //}
         }
       }
     }
