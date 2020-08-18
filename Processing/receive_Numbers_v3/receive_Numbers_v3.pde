@@ -52,10 +52,10 @@ public Table dataTable = new Table();
 void setup() {
   serialSetup();
   createTable(dataTable);
-  //size(800, 800);
+  size(800, 800);
   //background(0);
   
-  //canvas = createGraphics(width, height);
+  canvas = createGraphics(width * 2, height * 2);
   
   // Create the sine oscillator.
   //sine = new SinOsc(this);
@@ -106,18 +106,16 @@ public void sketchScreen() {
               canvas.beginDraw();
           
               // * draw circles *
-              float rand_x = random(width);
-              float rand_y = random(height);
+              float rand_x = random(canvas.width);
+              float rand_y = random(canvas.height);
               int diameter = abs(Integer.parseInt(accel_data[i]));
-              //fill(colors[i][0], colors[i][1], colors[i][2]); //light blue
-              //ellipse(rand_x, rand_y, diameter, diameter);
               
               canvas.fill(colors[i][0], colors[i][1], colors[i][2]);
               canvas.ellipse(rand_x, rand_y, diameter, diameter);
               canvas.endDraw();
               
-              background(0);
-              image(canvas, 0, 0);
+              //background(0);
+              image(canvas, 0, 0, width, height);
           
            }
            
@@ -154,7 +152,7 @@ public void sketchScreen() {
         
         
         // save Frames
-          //if (recording) {
+          if (recording) {
             String frame_number_string = nf(frame_number, 4);
             //String animationFileLocation_and_Name = animationFileLocation + currentDate + '/' + "shot-" + currentDateAndTime + '/' + "####.png";
             //saveFrame(animationFileLocation_and_Name);
@@ -165,10 +163,10 @@ public void sketchScreen() {
             
             myPort.write('R');
             println("R");
-          //} else {
-          //  myPort.write('N');
-          //  println("N");
-          //}
+          } else {
+            myPort.write('N');
+            println("N");
+          }
         }
       }
     }
@@ -198,7 +196,7 @@ public void keyPressed() {
   
   // record movie
   if ((key == 'r' || key == 'R') && gameState == 1) {
-    recording = !recording;
+    //recording = !recording;
   }
   
   // exit
