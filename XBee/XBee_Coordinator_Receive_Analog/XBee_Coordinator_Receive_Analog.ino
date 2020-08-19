@@ -15,9 +15,14 @@ byte analog_LSB;
 int analog_reading_Z;
 int analog_reading_Y;
 int analog_reading_X;
-int Z_accel_at_rest = 551; // calibrated values
-int Y_accel_at_rest = 552; // calibrated values
-int X_accel_at_rest = 435; // calibrated values
+
+int Z_accel_at_rest = 550; // calibrated values
+int Y_accel_at_rest = 551; // calibrated values
+int X_accel_at_rest = 437; // calibrated values
+
+//int Z_accel_at_rest = 551; // calibrated values
+//int Y_accel_at_rest = 552; // calibrated values
+//int X_accel_at_rest = 435; // calibrated values
 
 
 SoftwareSerial XBee(2, 3); // XBee DOUT, IN - Arduino pin 2, 3 (RX, TX)

@@ -24,7 +24,7 @@ Boolean firstContact = false;
 Boolean pauseScreen = false;
 
 public int gameState = 0;
-public Boolean recording = true;
+public Boolean recording = false;
 public int frame_number = 0;
 
 public int borderHeight = 10;
@@ -55,10 +55,10 @@ void setup() {
   background(0);
   
   // * 1:1 canvas *
-  //size(800, 800);
+  size(800, 800);
   
   // * 16:9 canvas *
-  size(960, 540);
+  //size(960, 540);
 
   
   canvas = createGraphics(width * 2, height * 2);
