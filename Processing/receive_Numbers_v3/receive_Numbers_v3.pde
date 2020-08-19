@@ -11,6 +11,9 @@ import processing.serial.*;
 Serial myPort;   // Create object from Serial class
 
 PGraphics canvas;
+public int canvasWidth;
+public int canvasHeight;
+public int scaleFactor = 1;
 
 public String val;      // Data received from the serial port
 public String[] accel_data = new String[3]; // x, y, z data from Arduino
@@ -32,8 +35,6 @@ public int buttonDiameter = 35;
 public int buttonSpacing = 150;
 public int textSpacing = 45;
 
-public int canvasWidth = 800;
-public int canvasHeight = 800;
 public int userInterfaceHeight = buttonDiameter + borderHeight*2;
 
 public String currentDateAndTime = get_date_and_time();
@@ -60,8 +61,10 @@ void setup() {
   // * 16:9 canvas *
   //size(960, 540);
 
-  
-  canvas = createGraphics(width * 2, height * 2);
+  canvasWidth = width * scaleFactor;
+  canvasHeight = height * scaleFactor;
+  //canvas = createGraphics(width * 2, height * 2);
+  canvas = createGraphics(canvasWidth, canvasHeight);
   
   // Create the sine oscillator.
   //sine = new SinOsc(this);
@@ -104,10 +107,13 @@ public void sketchScreen() {
            
            accel_data = split(val, "\t");
            
-           for (int i = 0; i < accel_data.length; i++) {
-             if (accel_data[i] != null) {
-               println(axis_label[i] + ": " + accel_data[i]);
+           for (int i = 0; i < 3; i++) {
+             if (accel_data[i] == null) {
+               accel_data[i] = "0";
              }
+             
+              println(axis_label[i] + ": " + accel_data[i]);
+              println("accel_data length: " + accel_data.length);
           
               canvas.beginDraw();
           
@@ -122,7 +128,7 @@ public void sketchScreen() {
               
               //background(0);
               image(canvas, 0, 0, width, height);
-          
+             
            }
            
               //// * draw circle 1 *
