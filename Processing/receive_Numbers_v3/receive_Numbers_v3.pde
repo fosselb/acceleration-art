@@ -11,9 +11,6 @@ import processing.serial.*;
 Serial myPort;   // Create object from Serial class
 
 PGraphics canvas;
-public int canvasWidth;
-public int canvasHeight;
-public int scaleFactor = 1;
 
 public String val;      // Data received from the serial port
 public String[] accel_data = new String[3]; // x, y, z data from Arduino
@@ -60,11 +57,10 @@ void setup() {
   
   // * 16:9 canvas *
   //size(960, 540);
-
-  canvasWidth = width * scaleFactor;
-  canvasHeight = height * scaleFactor;
-  //canvas = createGraphics(width * 2, height * 2);
-  canvas = createGraphics(canvasWidth, canvasHeight);
+  
+  pixelDensity(displayDensity());
+  
+  canvas = createGraphics(width, height);
   
   // Create the sine oscillator.
   //sine = new SinOsc(this);
