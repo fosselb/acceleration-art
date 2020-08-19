@@ -13,6 +13,7 @@ Serial myPort;   // Create object from Serial class
 PGraphics canvas;
 
 public String val;      // Data received from the serial port
+public String[] incoming_data = new String[3];
 public String[] accel_data = new String[3]; // x, y, z data from Arduino
 public String[] axis_label = {"Z", "Y", "X"};
 public int[][] colors = { {67, 188, 205}, // circle 1
@@ -101,15 +102,20 @@ public void sketchScreen() {
         
         if (val != null || val != "") {     
            
-           accel_data = split(val, "\t");
+           incoming_data = split(val, "\t");
            
-           for (int i = 0; i < 3; i++) {
+           if (incoming_data.length > 3) {
+             accel_data = subset(incoming_data, 0, 3);
+           } else {
+             accel_data = incoming_data;
+           }
+           
+           for (int i = 0; i < accel_data.length; i++) {
              if (accel_data[i] == null) {
                accel_data[i] = "0";
              }
              
               println(axis_label[i] + ": " + accel_data[i]);
-              println("accel_data length: " + accel_data.length);
           
               canvas.beginDraw();
           
@@ -122,9 +128,7 @@ public void sketchScreen() {
               canvas.ellipse(rand_x, rand_y, diameter, diameter);
               canvas.endDraw();
               
-              //background(0);
               image(canvas, 0, 0, width, height);
-             
            }
            
               //// * draw circle 1 *
@@ -157,7 +161,6 @@ public void sketchScreen() {
           // * number of data points on screen *
           //numberOfDataPointsOnScreen++;
           //println(numberOfDataPointsOnScreen);
-        
         
         // save Frames
           if (recording) {

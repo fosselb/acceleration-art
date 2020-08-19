@@ -40,11 +40,14 @@ void loop() {
     long randomNumber = random(200);
     long randomNumber2 = random(200);
     long randomNumber3 = random(200);
+    long randomNumber4 = random(200);
     Serial.print(randomNumber);
     Serial.print("\t");
     Serial.print(randomNumber2);
-    Serial.print("\t");
-    Serial.print(randomNumber3);
+//    Serial.print("\t");
+//    Serial.print(randomNumber3);
+//    Serial.print("\t");
+//    Serial.print(randomNumber4);
     Serial.print("\n");
     delay(dataRate_in_milliseconds);
   }
