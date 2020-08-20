@@ -16,16 +16,40 @@ public String val;      // Data received from the serial port
 public String[] incoming_data = new String[3];
 public String[] accel_data = new String[3]; // x, y, z data from Arduino
 public String[] axis_label = {"Z", "Y", "X"};
-public int[][] colors = { {67, 188, 205}, // circle 1
-                          {234, 53, 70},  // circle 2
-                          {102, 46, 155}  // circle 3
+//public int[][] colors = { {67, 188, 205}, // circle 1
+//                          {234, 53, 70},  // circle 2
+//                          {102, 46, 155}  // circle 3
+//                        };
+
+// * forawrd roll *
+//public int[][] colors = { {201, 251, 255}, // circle 1
+//                          {219, 84, 97},  // circle 2
+//                          {255, 217, 206}  // circle 3
+//                        };
+
+// * cartwheel *
+//public int[][] colors = { {137, 4, 61}, // circle 1
+//                          {28, 48, 65},  // circle 2
+//                          {24, 242, 178}  // circle 3
+//                        };
+                        
+// * back hand spring *
+//public int[][] colors = { {8, 7, 8}, // circle 1
+//                          {253, 202, 64},  // circle 2
+//                          {230, 232, 230}  // circle 3
+//                        };
+                        
+// * swish to flying kick *
+public int[][] colors = { {255, 123, 156}, // circle 1
+                          {96, 113, 150},  // circle 2
+                          {232, 233, 237}  // circle 3
                         };
 
 Boolean firstContact = false;
 Boolean pauseScreen = false;
 
 public int gameState = 0;
-public Boolean recording = false;
+public Boolean recording = true;
 public int frame_number = 0;
 
 public int borderHeight = 10;
@@ -122,7 +146,12 @@ public void sketchScreen() {
               // * draw circles *
               float rand_x = random(canvas.width);
               float rand_y = random(canvas.height);
-              int diameter = abs(Integer.parseInt(accel_data[i]));
+              
+              int diameter = abs(Integer.parseInt(accel_data[i])) / 2;
+              
+              if (diameter < 50) {
+                diameter = diameter / 3;
+              }
               
               canvas.fill(colors[i][0], colors[i][1], colors[i][2]);
               canvas.ellipse(rand_x, rand_y, diameter, diameter);
