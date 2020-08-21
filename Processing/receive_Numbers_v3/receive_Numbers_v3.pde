@@ -40,17 +40,42 @@ public String[] axis_label = {"Z", "Y", "X"};
 //                        };
                         
 // * swish to flying kick *
-public int[][] colors = { {255, 123, 156}, // circle 1
-                          {96, 113, 150},  // circle 2
-                          {232, 233, 237}  // circle 3
+//public int[][] colors = { {255, 123, 156}, // circle 1
+//                          {96, 113, 150},  // circle 2
+//                          {232, 233, 237}  // circle 3
+//                        };
+                        
+// * kip up *
+//public int[][] colors = { {241, 91, 181}, // circle 1
+//                          {254, 228, 64},  // circle 2
+//                          {0, 187, 249}  // circle 3
+//                        };
+                        
+// * handstand *
+//public int[][] colors = { {152, 206, 0}, // circle 1
+//                          {22, 224, 189},  // circle 2
+//                          {120, 195, 251}  // circle 3
+//                        };
+                        
+// * aerial *
+//public int[][] colors = { {242, 84, 45}, // circle 1
+//                          {245, 223, 187},  // circle 2
+//                          {14, 149, 148}  // circle 3
+//                        };
+                        
+// * sequence / timeline test *
+public int[][] colors = { {7, 160, 195}, // circle 1
+                          {240, 200, 8},  // circle 2
+                          {221, 28, 26}  // circle 3
                         };
 
 Boolean firstContact = false;
 Boolean pauseScreen = false;
 
 public int gameState = 0;
-public Boolean recording = true;
+public Boolean recording = false;
 public int frame_number = 0;
+public int timeline_number = 0;
 
 public int borderHeight = 10;
 public int buttonDiameter = 35;
@@ -147,17 +172,21 @@ public void sketchScreen() {
               float rand_x = random(canvas.width);
               float rand_y = random(canvas.height);
               
-              int diameter = abs(Integer.parseInt(accel_data[i])) / 2;
+              int dataPoint = Integer.parseInt(accel_data[i]);
+              int diameter = abs(dataPoint) / 2;
               
               if (diameter < 50) {
                 diameter = diameter / 3;
               }
               
               canvas.fill(colors[i][0], colors[i][1], colors[i][2]);
+              //canvas.ellipse(timeline_number * 2, height/2, diameter, diameter);
               canvas.ellipse(rand_x, rand_y, diameter, diameter);
               canvas.endDraw();
               
               image(canvas, 0, 0, width, height);
+              
+              timeline_number++;
            }
            
               //// * draw circle 1 *
