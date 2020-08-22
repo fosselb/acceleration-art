@@ -302,8 +302,8 @@ public void initScreen() {
   text("Press SPACE BAR to pause/play", width/2, height/2 + textSpacing*3 - textSpacing*4);
   textSize(30);
   text("Press S key to save sketch", width/2, height/2 + textSpacing*4 - textSpacing*4);
-  textSize(30);
-  text("Press R key to record sketch", width/2, height/2 + textSpacing*5 - textSpacing*4);
+  //textSize(30);
+  //text("Press R key to record sketch", width/2, height/2 + textSpacing*5 - textSpacing*4);
   textSize(30);
   text("CLICK anywhere to begin", width/2, height/2 + textSpacing*7 - textSpacing*4);
   
