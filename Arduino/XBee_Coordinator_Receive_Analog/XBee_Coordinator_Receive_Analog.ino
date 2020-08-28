@@ -39,11 +39,11 @@ void loop() {
 
     dataCount++;
 
-// * to view all the bytes coming in *
+// * to view entire package of bytes coming in *
 //    Serial.print(current, HEX);
 //    Serial.print(",");
     
-// * to view a nibble of analog data (0xXXXX) *
+// * to view parsed out analog data *
     if (dataCount == 12) {
       analog_MSB = current;
     } else if (dataCount == 13) {
