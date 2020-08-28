@@ -1,73 +1,74 @@
-// receive_Numbers_v3.pde
+// sketch.pde
 // Author: Fosse Lin-Bianco
-// Purpose: To display acceleration data in the visual form of circles and color. Version 3.
-//          Key presses and click for controls. No buttons.
-// Notes: This program runs in conjunction with Accelerometer_Read.ino created by Fosse Lin-Bianco
+// Purpose: To display acceleration data in the visual form of circles and color.
+//          Key presses and click for controls.
+// Notes: This program runs in conjunction with XBee_Coordinator_Receive_Analog.ino
+//          created by Fosse Lin-Bianco
 
 import processing.serial.*;
-//import processing.sound.*;
-//SinOsc sine;
 
-Serial myPort;   // Create object from Serial class
+Serial myPort;
 
 PGraphics canvas;
 
-public String val;      // Data received from the serial port
+public String val; // data received from the serial port
 public String[] incoming_data = new String[3];
-public String[] accel_data = new String[3]; // x, y, z data from Arduino
+public String[] accel_data = new String[3]; // z, y, x data from Arduino
 public String[] axis_label = {"Z", "Y", "X"};
-//public int[][] colors = { {67, 188, 205}, // circle 1
-//                          {234, 53, 70},  // circle 2
-//                          {102, 46, 155}  // circle 3
-//                        };
 
-// * forawrd roll *
+// * Tests 1.0 (forward roll) *
+public int[][] colors = { {67, 188, 205}, // circle 1
+                          {234, 53, 70},  // circle 2
+                          {102, 46, 155}  // circle 3
+                        };
+
+// * Tests 2.0 - 2.2 (forawrd roll) *
 //public int[][] colors = { {201, 251, 255}, // circle 1
 //                          {219, 84, 97},  // circle 2
 //                          {255, 217, 206}  // circle 3
 //                        };
 
-// * cartwheel *
+// * Tests 2.3 - 2.5 (cartwheel) *
 //public int[][] colors = { {137, 4, 61}, // circle 1
 //                          {28, 48, 65},  // circle 2
 //                          {24, 242, 178}  // circle 3
 //                        };
                         
-// * back hand spring *
+// * Tests 2.6 - 2.8 (back hand spring) *
 //public int[][] colors = { {8, 7, 8}, // circle 1
 //                          {253, 202, 64},  // circle 2
 //                          {230, 232, 230}  // circle 3
 //                        };
                         
-// * swish to flying kick *
+// * Tests 2.9 - 2.11 (swish to flying kick) *
 //public int[][] colors = { {255, 123, 156}, // circle 1
 //                          {96, 113, 150},  // circle 2
 //                          {232, 233, 237}  // circle 3
 //                        };
                         
-// * kip up *
+// * Tests 3.0 - 3.2 (kip up) *
 //public int[][] colors = { {241, 91, 181}, // circle 1
 //                          {254, 228, 64},  // circle 2
 //                          {0, 187, 249}  // circle 3
 //                        };
                         
-// * handstand *
+// * Tests 3.3 - 3.5 (handstand) *
 //public int[][] colors = { {152, 206, 0}, // circle 1
 //                          {22, 224, 189},  // circle 2
 //                          {120, 195, 251}  // circle 3
 //                        };
                         
-// * aerial *
+// * Tests 3.6 - 3.8 (aerial) *
 //public int[][] colors = { {242, 84, 45}, // circle 1
 //                          {245, 223, 187},  // circle 2
 //                          {14, 149, 148}  // circle 3
 //                        };
                         
-// * sequence / timeline test *
-public int[][] colors = { {7, 160, 195}, // circle 1
-                          {240, 200, 8},  // circle 2
-                          {221, 28, 26}  // circle 3
-                        };
+// * Tests 4.0 - 6.2 (stepping & acrobatics sequences) *
+//public int[][] colors = { {7, 160, 195}, // circle 1
+//                          {240, 200, 8},  // circle 2
+//                          {221, 28, 26}  // circle 3
+//                        };
 
 Boolean firstContact = false;
 Boolean pauseScreen = false;
@@ -92,9 +93,6 @@ public String dataFileLocation = "/Users/fosselin-bianco/Documents/LMU/Senior Pr
 
 public int shotCounter = 0;
 
-public int numberOfDataPointsOnScreen = 0;
-public final int dataPointLimit = 500;
-
 public Table dataTable = new Table();
 
 void setup() {
@@ -111,10 +109,6 @@ void setup() {
   pixelDensity(displayDensity());
   
   canvas = createGraphics(width, height);
-  
-  // Create the sine oscillator.
-  //sine = new SinOsc(this);
-  //sine.play();
 }
 
 void draw() {
@@ -129,10 +123,10 @@ void draw() {
 
 public void sketchScreen() {
   if (myPort.available() > 0) {
-    val = myPort.readStringUntil('\n');  // put incoming data into a string.
-                                         // '\n' is our end delimiter indicating the end of a complete packet
+    val = myPort.readStringUntil('\n'); // put incoming data into a string.
+                                        // '\n' is our end delimiter indicating the end of a complete packet
     if (val != null) {
-      val = trim(val);    // trim whitesapce & formatting characters (like '\n')
+      val = trim(val); // trim whitesapce & formatting characters (like '\n')
       
       if (firstContact == false) {
         if (val.equals("A")) {
@@ -166,9 +160,9 @@ public void sketchScreen() {
              
               println(axis_label[i] + ": " + accel_data[i]);
           
+              // * draw circles *
               canvas.beginDraw();
           
-              // * draw circles *
               float rand_x = random(canvas.width);
               float rand_y = random(canvas.height);
               
@@ -180,52 +174,28 @@ public void sketchScreen() {
               }
               
               canvas.fill(colors[i][0], colors[i][1], colors[i][2]);
-              //canvas.ellipse(timeline_number * 2, height/2, diameter, diameter);
-              canvas.ellipse(rand_x, rand_y, diameter, diameter);
-              canvas.endDraw();
               
+              // * Tests 1.0 - 3.8 *
+              canvas.ellipse(rand_x, rand_y, diameter, diameter);
+              
+              // * Tests 4.0 - 5.0 *
+              //canvas.ellipse(timeline_number, height/2, diameter, diameter);
+              
+              // * Tests 6.0 - 6.2 *
+              //canvas.ellipse(timeline_number * 2, height/2, diameter, diameter);
+              
+              canvas.endDraw();
               image(canvas, 0, 0, width, height);
               
               timeline_number++;
            }
-           
-              //// * draw circle 1 *
-              //float rand_x = random(width);
-              //float rand_y = random(height);
-              //int diameter = abs(Integer.parseInt(accel_data[0]));
-              //fill(67, 188, 205); //light blue
-              //ellipse(rand_x, rand_y, diameter, diameter);
-              
-              //// * draw circle 2 *
-              //rand_x = random(width);
-              //rand_y = random(height);
-              //diameter = abs(Integer.parseInt(accel_data[1]));
-              //fill(234, 53, 70); //red orange
-              //ellipse(rand_x, rand_y, diameter, diameter);
-              
-              //// * draw circle 3 *
-              //rand_x = random(width);
-              //rand_y = random(height);
-              //diameter = abs(Integer.parseInt(accel_data[2]));
-              //fill(102, 46, 155); //purple
-              //ellipse(rand_x, rand_y, diameter, diameter);
-          
-          // * play sound *
-          //sine.freq(float(val));
           
           // * save dataTable *
           saveData(dataTable);
-          
-          // * number of data points on screen *
-          //numberOfDataPointsOnScreen++;
-          //println(numberOfDataPointsOnScreen);
         
-        // save Frames
+          // * save frame *
           if (recording) {
             String frame_number_string = nf(frame_number, 4);
-            //String animationFileLocation_and_Name = animationFileLocation + currentDate + '/' + "shot-" + currentDateAndTime + '/' + "####.png";
-            //saveFrame(animationFileLocation_and_Name);
-            
             String animationFileLocation_and_Name = animationFileLocation + currentDate + '/' + "shot-" + currentDateAndTime + '/' + "shot-" + currentDateAndTime + "-" + frame_number_string + ".png";
             canvas.save(animationFileLocation_and_Name);
             frame_number++;
@@ -243,7 +213,6 @@ public void sketchScreen() {
 }
 
 public void keyPressed() {
-  //pause
   if (key == ' ' && gameState == 1) {
     pauseScreen = !pauseScreen;
     if (pauseScreen) {
@@ -253,7 +222,6 @@ public void keyPressed() {
     }
   }
   
-  // save image
   if ((key == 's' || key == 'S') && gameState == 1) {
     String fileName = get_date_and_time();
     String screenshotFileLocation_and_Name = screenshotsFileLocation + currentDate + '/' + fileName + ".png";
@@ -261,16 +229,6 @@ public void keyPressed() {
     canvas.save(screenshotFileLocation_and_Name);
     myPort.write('S');
     println("S");
-  }
-  
-  // record movie
-  if ((key == 'r' || key == 'R') && gameState == 1) {
-    //recording = !recording;
-  }
-  
-  // exit
-  if (key == '`') {
-    exit();
   }
 }
 
@@ -282,16 +240,14 @@ public void mouseClicked() {
 }
 
 public void serialSetup() {
-  String portName = Serial.list()[4];        // change to match port
-  //printArray(Serial.list());  // find what serial port to use
+  String portName = Serial.list()[4]; // change to match port
+  //printArray(Serial.list()); // find what serial port to use
   
   myPort = new Serial(this, portName, 9600);
   myPort.bufferUntil('\n');
 }
 
 public void initScreen() {
-  //fill(0, 255, 0, 100);
-  //rect(0, 0, width, height);
   fill(255);
   textSize(50);
   textAlign(CENTER, CENTER);
@@ -302,11 +258,8 @@ public void initScreen() {
   text("Press SPACE BAR to pause/play", width/2, height/2 + textSpacing*3 - textSpacing*4);
   textSize(30);
   text("Press S key to save sketch", width/2, height/2 + textSpacing*4 - textSpacing*4);
-  //textSize(30);
-  //text("Press R key to record sketch", width/2, height/2 + textSpacing*5 - textSpacing*4);
   textSize(30);
   text("CLICK anywhere to begin", width/2, height/2 + textSpacing*7 - textSpacing*4);
-  
 }
 
 public void eraseWelcomeIntructions() {
@@ -316,7 +269,6 @@ public void eraseWelcomeIntructions() {
 
 public String get_date_and_time() {
   String[] date_and_time = new String[6];
-
   date_and_time[0] = String.valueOf(year());
   date_and_time[1] = String.valueOf(month());
   date_and_time[2] = String.valueOf(day()); 
@@ -324,44 +276,28 @@ public String get_date_and_time() {
   date_and_time[4] = String.valueOf(minute());
   date_and_time[5] = String.valueOf(second());
   
-  String s = join(date_and_time, ".");
-  //println(s);
-  
+  String s = join(date_and_time, ".");  
   return s;
 }
 
 public String get_date() {
   String[] date = new String[3];
-
   date[0] = String.valueOf(month());
   date[1] = String.valueOf(day());
   date[2] = String.valueOf(year());
   
   String s = join(date, "-");
-  //println(s);
-   
   return s;
 }
 
 public String get_time() {
   String[] time = new String[3];
-
   time[0] = String.valueOf(hour());
   time[1] = String.valueOf(minute());
   time[2] = String.valueOf(second());
   
   String s = join(time, ":");
-
   return s;
-}
-
-public void addRecordingButton(int x, int y) {
-  //fill(255, 0, 0);
-  noStroke();
-  int rectWidth = 25;
-  int rectHeight = 15;
-  rect(x, y, rectWidth, rectHeight);
-  triangle(x + rectWidth - 5, y + rectHeight/2, x + rectWidth + 10, y - 3, x + rectWidth + 10, y + rectHeight + 3);
 }
 
 public void saveData(Table t) {
@@ -373,12 +309,7 @@ public void saveData(Table t) {
     newRow.setInt("accel_" + axis_label[i], Integer.parseInt(accel_data[i]));
   }
   
-  //newRow.setInt("accel_X", Integer.parseInt(accel_data[0]));
-  //newRow.setInt("accel_Y", Integer.parseInt(accel_data[1]));
-  //newRow.setInt("accel_Z", Integer.parseInt(accel_data[2]));
-  
   String dataFileLocation_and_Name = dataFileLocation + currentDate + '/' + "shot-" + currentDateAndTime + ".csv";
-  
   saveTable(t, dataFileLocation_and_Name);
 }
 
@@ -388,8 +319,4 @@ public void createTable(Table t) {
   t.addColumn("accel_Z");
   t.addColumn("accel_Y");
   t.addColumn("accel_X");
-}
-
-public void calibrate() {
-
 }
