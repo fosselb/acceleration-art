@@ -1,10 +1,8 @@
 // XBee_Coordinator_Receive_Analog.ino
 // Author: Fosse Lin-Bianco
-// Purpose: To receive analog data from a remote XBee
-//    and print DECIMAL value to Serial Monitor. Data generated from
-//    XCTU software.
-// Hardware: 1) XBee + XBee Shield + Arduino RedBoard
-//           2) XBee + Dongle
+// Purpose: To receive analog data from a Coordinator XBee
+//    and print DECIMAL value to Serial Monitor.
+// Hardware: 1) XBee Series 3 + XBee Shield + Arduino RedBoard
 
 #include <SoftwareSerial.h>
 
@@ -16,11 +14,10 @@ int analog_reading_Z;
 int analog_reading_Y;
 int analog_reading_X;
 
-// Calibrated Values -- CHNAGE THESE BEFORE EACH TEST
+// * calibrated values - CHNAGE THESE VALUES BEFORE EACH TEST *
 int Z_accel_at_rest = 589;
 int Y_accel_at_rest = 511;
 int X_accel_at_rest = 435;
-
 
 SoftwareSerial XBee(2, 3); // XBee DOUT, IN - Arduino pin 2, 3 (RX, TX)
 
@@ -42,25 +39,24 @@ void loop() {
 
     dataCount++;
 
-// * To view all the bytes coming in *
+// * to view all the bytes coming in *
 //    Serial.print(current, HEX);
 //    Serial.print(",");
     
-// * To view a nibble of analog data (0xXXXX) *
+// * to view a nibble of analog data (0xXXXX) *
     if (dataCount == 12) {
       analog_MSB = current;
     } else if (dataCount == 13) {
       analog_LSB = current;
-      analog_reading_Z = (analog_MSB * 256) + analog_LSB; // shift MSB, combine MSB and LSB
+      analog_reading_Z = (analog_MSB * 256) + analog_LSB;
       analog_reading_Z -= Z_accel_at_rest;
       Serial.print(analog_reading_Z);
-//      Serial.print("\n");
       Serial.print("\t");
     } else if (dataCount == 14) {
       analog_MSB = current;
     } else if (dataCount == 15) {
       analog_LSB = current;
-      analog_reading_Y = (analog_MSB * 256) + analog_LSB; // shift MSB, combine MSB and LSB
+      analog_reading_Y = (analog_MSB * 256) + analog_LSB;
       analog_reading_Y -= Y_accel_at_rest;
       Serial.print(analog_reading_Y);
       Serial.print("\t");
@@ -68,12 +64,11 @@ void loop() {
       analog_MSB = current;
     } else if (dataCount == 17) {
       analog_LSB = current;
-      analog_reading_X = (analog_MSB * 256) + analog_LSB; // shift MSB, combine MSB and LSB
+      analog_reading_X = (analog_MSB * 256) + analog_LSB;
       analog_reading_X -= X_accel_at_rest;
       Serial.print(analog_reading_X);
       Serial.print("\n");
     }
-
   }
 }
 
