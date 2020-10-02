@@ -15,9 +15,9 @@ int analog_reading_Y;
 int analog_reading_X;
 
 // * calibrated values - CHNAGE THESE VALUES BEFORE EACH TEST *
-int Z_accel_at_rest = 589;
-int Y_accel_at_rest = 511;
-int X_accel_at_rest = 435;
+int Z_accel_at_rest = 550;
+int Y_accel_at_rest = 547;
+int X_accel_at_rest = 433;
 
 SoftwareSerial XBee(2, 3); // XBee DOUT, IN - Arduino pin 2, 3 (RX, TX)
 
