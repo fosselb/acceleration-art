@@ -101,10 +101,10 @@ void setup() {
   background(0);
   
   // * 1:1 canvas *
-  //size(800, 800);
+  size(800, 800);
   
   // * 16:9 canvas *
-  size(960, 540);
+  //size(960, 540);
   
   pixelDensity(displayDensity());
   
@@ -176,7 +176,7 @@ public void sketchScreen() {
               canvas.fill(colors[i][0], colors[i][1], colors[i][2]);
               
               // * Tests 1.0 - 3.8 *
-              //canvas.ellipse(rand_x, rand_y, diameter, diameter);
+              canvas.ellipse(rand_x, rand_y, diameter, diameter);
               
               // * Tests 4.0 - 5.0 *
               //canvas.ellipse(timeline_number, height/2, diameter, diameter);
@@ -185,7 +185,7 @@ public void sketchScreen() {
               //canvas.ellipse(timeline_number * 2, height/2, diameter, diameter);
               
               // * Experiment 2.0 *
-              canvas.ellipse(timeline_number * 9, height/2, diameter, diameter);
+              //canvas.ellipse(timeline_number * 9, height/2, diameter, diameter);
               
               canvas.endDraw();
               image(canvas, 0, 0, width, height);
