@@ -17,10 +17,10 @@ public String[] accel_data = new String[3]; // z, y, x data from Arduino
 public String[] axis_label = {"Z", "Y", "X"};
 
 // * Tests 1.0 (forward roll) *
-public int[][] colors = { {67, 188, 205}, // circle 1
-                          {234, 53, 70},  // circle 2
-                          {102, 46, 155}  // circle 3
-                        };
+//public int[][] colors = { {67, 188, 205}, // circle 1
+//                          {234, 53, 70},  // circle 2
+//                          {102, 46, 155}  // circle 3
+//                        };
 
 // * Tests 2.0 - 2.2 (forawrd roll) *
 //public int[][] colors = { {201, 251, 255}, // circle 1
@@ -59,10 +59,10 @@ public int[][] colors = { {67, 188, 205}, // circle 1
 //                        };
                         
 // * Tests 3.6 - 3.8 (aerial) *
-//public int[][] colors = { {242, 84, 45}, // circle 1
-//                          {245, 223, 187},  // circle 2
-//                          {14, 149, 148}  // circle 3
-//                        };
+public int[][] colors = { {242, 84, 45}, // circle 1
+                          {245, 223, 187},  // circle 2
+                          {14, 149, 148}  // circle 3
+                        };
                         
 // * Tests 4.0 - 6.2 (stepping & acrobatics sequences) *
 //public int[][] colors = { {7, 160, 195}, // circle 1
@@ -77,6 +77,9 @@ public int gameState = 0;
 public Boolean recording = true;
 public int frame_number = 0;
 public int timeline_number = 0;
+public int radius = 200;
+public float angle = 0;
+public float angleSpeed = 1;
 
 public int borderHeight = 10;
 public int buttonDiameter = 35;
@@ -101,10 +104,10 @@ void setup() {
   background(0);
   
   // * 1:1 canvas *
-  size(800, 800);
+  //size(800, 800);
   
   // * 16:9 canvas *
-  //size(960, 540);
+  size(960, 540);
   
   pixelDensity(displayDensity());
   
@@ -169,14 +172,14 @@ public void sketchScreen() {
               int dataPoint = Integer.parseInt(accel_data[i]);
               int diameter = abs(dataPoint) / 2;
               
-              if (diameter < 50) {
-                diameter = diameter / 3;
-              }
+              //if (diameter < 50) {
+              //  diameter = diameter / 3;
+              //}
               
               canvas.fill(colors[i][0], colors[i][1], colors[i][2]);
               
               // * Tests 1.0 - 3.8 *
-              canvas.ellipse(rand_x, rand_y, diameter, diameter);
+              //canvas.ellipse(rand_x, rand_y, diameter, diameter);
               
               // * Tests 4.0 - 5.0 *
               //canvas.ellipse(timeline_number, height/2, diameter, diameter);
@@ -185,19 +188,32 @@ public void sketchScreen() {
               //canvas.ellipse(timeline_number * 2, height/2, diameter, diameter);
               
               // * Experiment 2.0 *
-              //canvas.ellipse(timeline_number * 9, height/2, diameter, diameter);
+              //canvas.ellipse(timeline_number * 9, height/2, diameter*4, diameter*4);
+              
+              // * Experiment Circle Trace *
+              //int[] rectCoordinates = polarToRectPixels(radius, angle);
+              //canvas.ellipse(width/2 + rectCoordinates[0], height/2 + rectCoordinates[1], diameter, diameter);
+              
+              // * Experiment Different Speed Lines *
+              //canvas.ellipse(timeline_number * 5, height/2, diameter, diameter);
+              
+              // * Experiment Circles in place *
+              canvas.ellipse(width/2, height/2, diameter*2, diameter*2);
+              
               
               canvas.endDraw();
               image(canvas, 0, 0, width, height);
               
               timeline_number++;
+              angle = angle + angleSpeed;
            }
-          
-          // * save dataTable *
-          saveData(dataTable);
         
           // * save frame *
           if (recording) {
+            
+            // * save dataTable *
+            saveData(dataTable);
+            
             String frame_number_string = nf(frame_number, 4);
             String animationFileLocation_and_Name = animationFileLocation + currentDate + '/' + "shot-" + currentDateAndTime + '/' + "shot-" + currentDateAndTime + "-" + frame_number_string + ".png";
             canvas.save(animationFileLocation_and_Name);
@@ -243,7 +259,7 @@ public void mouseClicked() {
 }
 
 public void serialSetup() {
-  String portName = Serial.list()[4]; // change to match port
+  String portName = Serial.list()[5]; // change to match port
   //printArray(Serial.list()); // find what serial port to use
   
   myPort = new Serial(this, portName, 9600);
@@ -322,4 +338,10 @@ public void createTable(Table t) {
   t.addColumn("accel_Z");
   t.addColumn("accel_Y");
   t.addColumn("accel_X");
+}
+
+public int[] polarToRectPixels(int radius, float angle) {
+  int x = round(radius * cos(angle * PI / 180));
+  int y = round(radius * sin(angle * PI / 180));
+  return new int[] {x, y};
 }
