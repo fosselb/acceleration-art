@@ -84,11 +84,9 @@ public String[] axis_label = {"Z", "Y", "X"};
                         
 // * Balance v2 *
 //public int[][] colors = { {135, 0, 88}, // plum
+//                          {200, 214, 175},  // lighter 50s green
 //                          {164, 48, 63},  // orangeish burgundy
-//                          {200, 214, 175}  // lighter 50s green
 //                        }; 
-                        
-
                         
 // * Drop Slide on Wall *
 //public int[][] colors = { {0, 63, 145}, // blue
@@ -103,8 +101,8 @@ public String[] axis_label = {"Z", "Y", "X"};
 //                        }; 
 
 // * Transition to/from New/Old World *
-//public int[][] colors = { {93, 211, 158}, // green
-//                          {52, 138, 167},  // blue
+//public int[][] colors = { {52, 138, 167},  // blue
+//                          {93, 211, 158}, // green
 //                          {82, 81, 116}  // purple
 //                        };
 
@@ -126,11 +124,11 @@ public String[] axis_label = {"Z", "Y", "X"};
 //                          {37, 92, 153}  // deeper blue
 //                        }; 
 
-// * Handstand v2 *
-//public int[][] colors = { {0, 99, 93}, // deep green
-//                          {8, 164, 189},  // light blue
-//                          {68, 109, 246}  // deeper/lighter blue
-//                        }; 
+// * Handstand v2 and Arm Swipe *
+public int[][] colors = { {0, 99, 93}, // deep green
+                          {8, 164, 189},  // light blue
+                          {68, 109, 246}  // deeper/lighter blue
+                        }; 
                         
 // * Other: Coral and Green *
 //public int[][] colors = { {255, 111, 89}, // coral
@@ -139,16 +137,16 @@ public String[] axis_label = {"Z", "Y", "X"};
 //                        }; 
 
 // * Other: Violet and Orange *
-public int[][] colors = { {68, 53, 91}, // coral
-                          {236, 167, 44},  // dark green
-                          {238, 86, 34}  // lighter green
-                        }; 
+//public int[][] colors = { {68, 53, 91}, // coral
+//                          {236, 167, 44},  // dark green
+//                          {238, 86, 34}  // lighter green
+//                        }; 
 
 Boolean firstContact = false;
 Boolean pauseScreen = false;
 
 public int gameState = 0;
-public Boolean recording = false;
+public Boolean recording = true;
 public int frame_number = 0;
 public int timeline_number = 0;
 public int radius = 200;
@@ -246,14 +244,15 @@ public void sketchScreen() {
               int dataPoint = Integer.parseInt(accel_data[i]);
               int diameter = abs(dataPoint) / 2;
               
-              //if (diameter < 50) {
+              //if (diameter < 25) {
               //  diameter = diameter / 3;
               //}
               
               canvas.fill(colors[i][0], colors[i][1], colors[i][2]);
               
               // * Tests 1.0 - 3.8 *
-              canvas.ellipse(rand_x, rand_y, diameter, diameter);
+              //diameter = diameter * 2;
+              //canvas.ellipse(rand_x, rand_y, diameter, diameter);
               
               // * Tests 4.0 - 5.0 *
               //canvas.ellipse(timeline_number, height/2, diameter, diameter);
@@ -265,11 +264,11 @@ public void sketchScreen() {
               //canvas.ellipse(timeline_number * 9, height/2, diameter*4, diameter*4);
               
               // * Experiment Circle Trace *
-              //int[] rectCoordinates = polarToRectPixels(radius, angle);
-              //canvas.ellipse(width/2 + rectCoordinates[0], height/2 + rectCoordinates[1], diameter, diameter);
+              int[] rectCoordinates = polarToRectPixels(radius, angle);
+              canvas.ellipse(width/2 + rectCoordinates[0], height/2 + rectCoordinates[1], diameter, diameter);
               
               // * Experiment Different Speed Lines *
-              //canvas.ellipse(timeline_number * 5, height/2, diameter, diameter);
+              //canvas.ellipse(timeline_number * 8, height/2, diameter * 1, diameter * 1);
               
               // * Experiment Circles in place *
               //canvas.ellipse(width/2, height/2, diameter*2, diameter*2);

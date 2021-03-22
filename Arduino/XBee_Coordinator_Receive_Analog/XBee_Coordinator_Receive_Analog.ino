@@ -19,6 +19,11 @@ int Z_accel_at_rest = 550;
 int Y_accel_at_rest = 547;
 int X_accel_at_rest = 433;
 
+// foot on wall position
+//int Z_accel_at_rest = 518;
+//int Y_accel_at_rest = 401;
+//int X_accel_at_rest = 494;
+
 SoftwareSerial XBee(2, 3); // XBee DOUT, IN - Arduino pin 2, 3 (RX, TX)
 
 void setup() {
