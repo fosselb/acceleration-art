@@ -119,28 +119,28 @@ public String[] axis_label = {"Z", "Y", "X"};
 //                        }; 
                         
 // * Foot Slide v2 *
-//public int[][] colors = { {179, 0, 27}, // red
-//                          {38, 38, 38},  // gray
-//                          {37, 92, 153}  // deeper blue
+//public int[][] colors = { {37, 92, 153},  // deeper blue
+//                          {179, 0, 27}, // red
+//                          {38, 38, 38}  // gray
 //                        }; 
 
 // * Handstand v2 and Arm Swipe *
-public int[][] colors = { {0, 99, 93}, // deep green
-                          {8, 164, 189},  // light blue
-                          {68, 109, 246}  // deeper/lighter blue
-                        }; 
+//public int[][] colors = { {0, 99, 93}, // deep green
+//                          {8, 164, 189},  // light blue
+//                          {68, 109, 246}  // deeper/lighter blue
+//                        }; 
                         
 // * Other: Coral and Green *
 //public int[][] colors = { {255, 111, 89}, // coral
-//                          {37, 68, 65},  // dark green
-//                          {67, 170, 139}  // lighter green
-//                        }; 
+                        //  {37, 68, 65},  // dark green
+                        //  {67, 170, 139}  // lighter green
+                        //}; 
 
 // * Other: Violet and Orange *
-//public int[][] colors = { {68, 53, 91}, // coral
-//                          {236, 167, 44},  // dark green
-//                          {238, 86, 34}  // lighter green
-//                        }; 
+public int[][] colors = { {68, 53, 91}, // coral
+                          {236, 167, 44},  // dark green
+                          {238, 86, 34}  // lighter green
+                        }; 
 
 Boolean firstContact = false;
 Boolean pauseScreen = false;
@@ -244,8 +244,8 @@ public void sketchScreen() {
               int dataPoint = Integer.parseInt(accel_data[i]);
               int diameter = abs(dataPoint) / 2;
               
-              //if (diameter < 25) {
-              //  diameter = diameter / 3;
+              //if (diameter > 50) {
+              //  diameter = diameter * 3;
               //}
               
               canvas.fill(colors[i][0], colors[i][1], colors[i][2]);
@@ -264,11 +264,11 @@ public void sketchScreen() {
               //canvas.ellipse(timeline_number * 9, height/2, diameter*4, diameter*4);
               
               // * Experiment Circle Trace *
-              int[] rectCoordinates = polarToRectPixels(radius, angle);
-              canvas.ellipse(width/2 + rectCoordinates[0], height/2 + rectCoordinates[1], diameter, diameter);
+              //int[] rectCoordinates = polarToRectPixels(radius, angle);
+              //canvas.ellipse(width/2 + rectCoordinates[0], height/2 + rectCoordinates[1], diameter, diameter);
               
               // * Experiment Different Speed Lines *
-              //canvas.ellipse(timeline_number * 8, height/2, diameter * 1, diameter * 1);
+              canvas.ellipse(timeline_number * 10, height/2, diameter * 1, diameter * 1);
               
               // * Experiment Circles in place *
               //canvas.ellipse(width/2, height/2, diameter*2, diameter*2);
