@@ -59,10 +59,10 @@ public String[] axis_label = {"Z", "Y", "X"};
 //                        };
                         
 // * Tests 3.6 - 3.8 (aerial) *
-public int[][] colors = { {242, 84, 45}, // circle 1
-                          {245, 223, 187},  // circle 2
-                          {14, 149, 148}  // circle 3
-                        };
+//public int[][] colors = { {242, 84, 45}, // circle 1
+//                          {245, 223, 187},  // circle 2
+//                          {14, 149, 148}  // circle 3
+//                        };
                         
 // * Tests 4.0 - 6.2 (stepping & acrobatics sequences) *
 //public int[][] colors = { {7, 160, 195}, // circle 1
@@ -70,11 +70,85 @@ public int[][] colors = { {242, 84, 45}, // circle 1
 //                          {221, 28, 26}  // circle 3
 //                        };
 
+// * 1st touch / wiggle [Lifted Colors] *
+//public int[][] colors = { {228, 87, 46}, // orange
+//                          {23, 190, 187},  // turquoise
+//                          {255, 201, 20}  // yellow
+//                        }; 
+                        
+// * Balance * 
+//public int[][] colors = { {118, 4, 33}, // burgundy
+//                          {57, 70, 72},  // gray
+//                          {105, 153, 93}  // 50s green
+//                        }; 
+                        
+// * Balance v2 *
+//public int[][] colors = { {135, 0, 88}, // plum
+//                          {164, 48, 63},  // orangeish burgundy
+//                          {200, 214, 175}  // lighter 50s green
+//                        }; 
+                        
+
+                        
+// * Drop Slide on Wall *
+//public int[][] colors = { {0, 63, 145}, // blue
+//                          {255, 255, 255},  // white
+//                          {109, 50, 109}  // deep purple
+//                        }; 
+                        
+// * White/Regular Shoe Transition Jump * Eh
+//public int[][] colors = { {243, 198, 119}, // tan/golden
+//                          {249, 86, 79},  // deep orange coral
+//                          {123, 30, 122}  // plum purple
+//                        }; 
+
+// * Transition to/from New/Old World *
+//public int[][] colors = { {93, 211, 158}, // green
+//                          {52, 138, 167},  // blue
+//                          {82, 81, 116}  // purple
+//                        };
+
+// * Arm Swipe, Coffee Grinder, Leg Snake [Smooth Colors] *
+//public int[][] colors = { {68, 109, 246}, // bright blue
+//                          {0, 99, 93},  // blue/green
+//                          {8, 164, 189}  // green
+//                        };
+
+// * Foot Slide *
+//public int[][] colors = { {214, 64, 69}, // red
+//                          {233, 255, 249},  // very light blue
+//                          {29, 51, 84}  // deeper blue
+//                        }; 
+                        
+// * Foot Slide v2 *
+//public int[][] colors = { {179, 0, 27}, // red
+//                          {38, 38, 38},  // gray
+//                          {37, 92, 153}  // deeper blue
+//                        }; 
+
+// * Handstand v2 *
+//public int[][] colors = { {0, 99, 93}, // deep green
+//                          {8, 164, 189},  // light blue
+//                          {68, 109, 246}  // deeper/lighter blue
+//                        }; 
+                        
+// * Other: Coral and Green *
+//public int[][] colors = { {255, 111, 89}, // coral
+//                          {37, 68, 65},  // dark green
+//                          {67, 170, 139}  // lighter green
+//                        }; 
+
+// * Other: Violet and Orange *
+public int[][] colors = { {68, 53, 91}, // coral
+                          {236, 167, 44},  // dark green
+                          {238, 86, 34}  // lighter green
+                        }; 
+
 Boolean firstContact = false;
 Boolean pauseScreen = false;
 
 public int gameState = 0;
-public Boolean recording = true;
+public Boolean recording = false;
 public int frame_number = 0;
 public int timeline_number = 0;
 public int radius = 200;
@@ -179,7 +253,7 @@ public void sketchScreen() {
               canvas.fill(colors[i][0], colors[i][1], colors[i][2]);
               
               // * Tests 1.0 - 3.8 *
-              //canvas.ellipse(rand_x, rand_y, diameter, diameter);
+              canvas.ellipse(rand_x, rand_y, diameter, diameter);
               
               // * Tests 4.0 - 5.0 *
               //canvas.ellipse(timeline_number, height/2, diameter, diameter);
@@ -198,7 +272,7 @@ public void sketchScreen() {
               //canvas.ellipse(timeline_number * 5, height/2, diameter, diameter);
               
               // * Experiment Circles in place *
-              canvas.ellipse(width/2, height/2, diameter*2, diameter*2);
+              //canvas.ellipse(width/2, height/2, diameter*2, diameter*2);
               
               
               canvas.endDraw();

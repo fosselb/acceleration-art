@@ -69,6 +69,8 @@ void loop() {
       Serial.print(analog_reading_X);
       Serial.print("\n");
     }
+  } else {
+    //sendRandomData();
   }
 }
 
@@ -77,4 +79,14 @@ void establishContact() {
     Serial.println("A");
     delay(300);
   }
+}
+
+void sendRandomData() {
+  Serial.print(int(random(0, 1024)));
+  Serial.print("\t");
+  Serial.print(int(random(0, 1024)));
+  Serial.print("\t");
+  Serial.print(int(random(0, 1024)));
+  Serial.print("\n");
+  delay(100);
 }
